@@ -10,19 +10,22 @@ body
     margin:0;
 
 }
-/*----BLOQUE DE INPUTS Y BOTONES----*/
-.right-block {
+
+.left-block
+{
 	float:right;
     width: 400px;
+    height:400px;
     padding: 20px;
     background: #fff;
     margin: 0 auto;
-    position:relative;
-  	left: -30%;
+
+ position:relative;
+  	left: 13%;
   	margin-top:0%;
 }
 
-.right-block input {
+.left-block input {
 	float:left;
     width: 100%;
     height: 42px;
@@ -36,7 +39,7 @@ body
     outline: none;
 }
 
-.right-block select {
+.left-block select {
 	float:left;
     width: 100%;
     height: 42px;
@@ -61,12 +64,12 @@ body
     margin-bottom: 20px;
     font-family: 'Raleway', sans-serif;
 }
-/*----BOTON DE GENERAR REPORTE----s*/
+/*----BOTON----*/
  .button {
-    position:relative;
-  	left: 43%;
-  	margin-top:0%;
-    width: 20%;
+   float:right;
+   position: relative;
+   margin-top: -10%;
+    width: 50%;
     height: 40px;
     background: #ffb500;
     box-sizing: border-box;
@@ -75,13 +78,13 @@ body
     color: #000;
     font-size: 18px;
     font-family: 'Raleway', sans-serif;
-    outline: none;
-    cursor: pointer;
+    white-space: normal;
+    margin:0px;
+    outline:none;
+    vertical-align: top;
+  /*  outline: none;
+    cursor: pointer;*/
 }
-/*.button:hover {
-    background: #FF8C00;
-    color: #000;
-}*/
 
 /*-----MENSAJE DE ERROR-----*/
 .infRojo {
@@ -90,6 +93,21 @@ body
     padding:12px;
     color: #D8000C;
     background-color: #FFBABA;
+    font-family: 'Raleway', sans-serif;
+    margin: 10px 0px;
+    padding:12px;
+    border-radius:.5em;
+     position:relative;
+    left: 35%;
+    margin-top:0%;
+    box-shadow:1px 1px 3px #888;
+}
+.infVerde {
+    width: 30%;
+    margin: 10px 0px;
+    padding:12px;
+    color: #04ef14;
+    background-color: #baf9b3;
     font-family: 'Raleway', sans-serif;
     margin: 10px 0px;
     padding:12px;
