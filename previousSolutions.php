@@ -39,31 +39,73 @@
             if(!isset($_SESSION['Name']))
                 header("Location: login.php");
             require("navBar/navBar.php");
+            require('functions/editar.php');
             navbar();
-             if(isset($_POST['seleccionar']))
-          {
+            
             $postData = array(
-            'date1' => $_POST['sol'],
-            's' => 'sp'
+            's' => 'previousSolutionsInfo'
             );
-        		//echo "[".json_encode($postData)."]";
-							//header("Location: visualizarweb/html/warehouse.html")
-          }
-
-
+            
+            //Verifica si se recibio informacion a partir de seleccion de solucion del combobox//
+            if(isset($_POST['solutionSelected']))
+            {
+                $infoData = array(
+                's' => 'solutionInfo'
+                );
+                echo "SS";
+            }
+            
+            //Combo box for previous solutions//
+            $data = editarperfil($postData);
+            $comboSolutions = "";
+            foreach($data as $row)
+            {
+                $solution_id = $row['id'];
+                $text = $row['wh_name'] . " - "  . $row['created_at'];
+                
+                //if selected
+                //$comboInst .=" <option value='".$row['INSTITUCION_Nombre']."' selected=\"selected\">".$row['INSTITUCION_Nombre']."</option>";
+                
+                //else
+                $comboSolutions .=" <option value='".$solution_id."'>".$text."</option>";
+            }
+            
          ?>
 
-           <form action=" visualizarweb/html/warehouse.html" method="post">
+           <!--form action=" visualizarweb/html/warehouse.html" method="post"-->
+        <form id= "sol_form" method="post">
             <br><br>
-		<br><br> <h1>Prevous Solutions</h1>
- 		<!--div class="right-block"-->
- 		<div><label>Select the previous solution you would like to see:</label><br><br></div>
-         <select name="sol">
-                    <option value="enero" >January</option>
-                    <option value="marzo">March</option>
+            <br><br> <h1>Previous Solutions</h1>
+            <!--div class="right-block"-->
+            <!--Get the dates where the solutions have been generated-->
+            <div><label>Select the previous solution you would like to see:</label><br><br></div>
+                    <select id = "solution_id" name="solution_id" onchange="actualizar()"><?php echo $comboSolutions;?></select>
                     </select></div>
-          <!--/div-->
-             <div><button class="btn-default" value=" seleccionar" type="seleccionar" name="seleccionar" >Select</button></div>
-             </form>
+            <!--/div-->
+            <div><button class="btn-default" onclick="submitForm('arrangeInstructions.php')" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instructions</button></div>
+            <div><button class="btn-default" onclick="submitForm('initialState.php')" value=" Estado Inicial" type="seleccionar" name="inicial" >Initial Warehouse State</button></div>
+            <div><button class="btn-default" onclick="submitForm('finalState.php')" value=" Estado Final" type="seleccionar" name="seleccionar" >Final Warehouse State</button></div>
+            </form>
 </body>
+
+<script type="text/javascript">
+  function submitForm(action) {
+    var form = document.getElementById('sol_form');
+    form.action = action;
+    form.submit();
+  }
+</script>
+
+<script type="text/javascript">
+  function actualizar()
+  {
+      var form = document.createElement("form");
+      form.setAttribute("method", "post");
+      form.setAttribute("action", "previousSolutions.php");
+      var solutionSelected = document.getElementById("solution_id").value;
+      form.appendChild(solutionSelected);
+      document.body.appendChild(form);
+      form.submit();
+  }
+</script>
 </html>

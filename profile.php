@@ -4,7 +4,7 @@
 		<meta charset ="UTF-8">
 		<!--link rel="stylesheet" href="css/styleEditar.css" type="text/css" media="all" /-->
 		<link rel="stylesheet" href="css/styleProfile.css" type="text/css" media="all" />
-
+		
 		<title>Reportes</title>
 		<link rel="shortcut icon" type="image/png" href="images/w.png"/>
 		<!-- custom-theme -->
@@ -75,12 +75,12 @@
 						</div>
 						</div>
 						';
-
 				?>
 
 
 					<div class="center-button">
          <div><a class="button hvr-ripple-in"  value="editar" name="editar " href ="editProfile.php">Edit Profile</a></div>
+         <div><a class="button hvr-ripple-in"  value="editarMapa" name="editarMapa " href ="jquery.php">Edit Map</a></div>
        </div>
      </body>
 </html>
