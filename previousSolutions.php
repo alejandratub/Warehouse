@@ -46,36 +46,75 @@
             's' => 'previousSolutionsInfo'
             );
             
-            //Verifica si se recibio informacion a partir de seleccion de solucion del combobox//
-            if(isset($_POST['solutionSelected']))
-            {
-                $infoData = array(
-                's' => 'solutionInfo'
-                );
-                echo "SS";
-            }
-            
-            //Combo box for previous solutions//
+            //Combo box de las ultimas soluciones//
             $data = editarperfil($postData);
             $comboSolutions = "";
+            
+            //Get the solution id for the default option//
+            $defaultOption = true;
+            
             foreach($data as $row)
             {
+                if($defaultOption)
+                {
+                    $defaultSolutionID = $row['id'];
+                    $defaultOption = false;
+                }
                 $solution_id = $row['id'];
                 $text = $row['wh_name'] . " - "  . $row['created_at'];
                 
-                //if selected
-                //$comboInst .=" <option value='".$row['INSTITUCION_Nombre']."' selected=\"selected\">".$row['INSTITUCION_Nombre']."</option>";
+                
+                //Si se mando un solution_id en la funcion actualizar() se selecciona en el combobox
+                if($_POST['solutionValue']==$solution_id)
+                    $comboInst .=" <option value='".$solution_id."' selected=\"selected\">".$solution_id."</option>";
                 
                 //else
                 $comboSolutions .=" <option value='".$solution_id."'>".$text."</option>";
             }
             
+            //Verifica si se recibio informacion a partir de seleccion de solucion del combobox//
+            if(isset($_POST['solutionValue']))
+            {
+                $infoData = array(
+                's' => 'solutionInfo',
+                'solution_id' => $_POST['solutionValue']
+                );
+            }
+            
+            //Si no se escogio alguna solucion por default se muestra la informacion de la última//
+            else
+            {
+                $infoData = array(
+                's' => 'solutionInfo',
+                'solution_id' => $defaultSolutionID
+                );
+            }
+            
+            $infoSolucion = editarperfil($infoData);
+            foreach($infoSolucion as $row)
+            {
+                $u_name = $row['u_name'];
+                $wh_name = $row['wh_name'];
+                $since = $row['since'];
+                $until = $row['until'];
+                $time_reduction = $row['time_reduction'];
+                $distance_reduction = $row['distance_reduction'];
+                $created_at = $row['created_at'];
+            }
+        ?>
+            <br><br> <h1>Previous Solutions</h1>
+        <?php
+            echo "<label>Warehouse optimized: $wh_name </label><br>";
+            echo "<label>Solution created at: $created_at </label><br>";
+            echo "<label>Solution created by: $u_name </label><br>";
+            echo "<label>Start capture date: $since </label><br>";
+            echo "<label>End capture date: $until  </label><br>";
+            echo "<label>Time optimization: $time_reduction </label/><br>";
+            echo "<label>Distance optimization: $distance_reduction </label><br>";
          ?>
 
            <!--form action=" visualizarweb/html/warehouse.html" method="post"-->
         <form id= "sol_form" method="post">
-            <br><br>
-            <br><br> <h1>Previous Solutions</h1>
             <!--div class="right-block"-->
             <!--Get the dates where the solutions have been generated-->
             <div><label>Select the previous solution you would like to see:</label><br><br></div>
@@ -85,27 +124,48 @@
             <div><button class="btn-default" onclick="submitForm('arrangeInstructions.php')" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instructions</button></div>
             <div><button class="btn-default" onclick="submitForm('initialState.php')" value=" Estado Inicial" type="seleccionar" name="inicial" >Initial Warehouse State</button></div>
             <div><button class="btn-default" onclick="submitForm('finalState.php')" value=" Estado Final" type="seleccionar" name="seleccionar" >Final Warehouse State</button></div>
-            </form>
+        </form>
+        
 </body>
 
-<script type="text/javascript">
-  function submitForm(action) {
-    var form = document.getElementById('sol_form');
-    form.action = action;
-    form.submit();
-  }
-</script>
-
-<script type="text/javascript">
+<script>
   function actualizar()
   {
       var form = document.createElement("form");
       form.setAttribute("method", "post");
       form.setAttribute("action", "previousSolutions.php");
+      
       var solutionSelected = document.getElementById("solution_id").value;
-      form.appendChild(solutionSelected);
+      var solutionValue = document.createElement("input");
+      solutionValue.setAttribute("type", "hidden");
+      solutionValue.setAttribute("name", "solutionValue");
+      solutionValue.setAttribute("value", solutionSelected);
+      form.appendChild(solutionValue);
+      
       document.body.appendChild(form);
       form.submit();
   }
 </script>
+
+
+<script>
+  function submitForm(action) 
+  {
+    var form = document.getElementById('sol_form');
+    form.setAttribute("method", "post");
+    form.action = action;
+    
+    var solutionSelected = document.getElementById("solution_id").value;
+    var solutionValue = document.createElement("input");
+    solutionValue.setAttribute("type", "hidden");
+    solutionValue.setAttribute("name", "solutionValue");
+    solutionValue.setAttribute("value", solutionSelected);
+    form.appendChild(solutionValue);
+    
+    document.body.appendChild(form);
+    form.submit();
+  }
+</script>
+
+
 </html>
