@@ -1,3 +1,16 @@
+<?php
+  if (isset($_POST['this.height']) ) {
+    $height = $_POST['this.height'];
+    echo $height;
+    return;
+  }
+  if (isset($_POST['this.width']) ) {
+    $width = $_POST['this.width'];
+    echo $width;
+    return;
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="es-MX">
 
@@ -170,15 +183,15 @@ $yMin = $responseData[0]['initial_y'];
 		//echo $yMax;
 		//echo "<label>$xMin</label>";
 
-	// proceso de escalamiento
+	  // proceso de escalamiento
     //$algo = ((3-$xMin)*1000)/($xMax-$xMin);
     //$vamos = ((3-$yMin)*1000)/($yMax-$yMin);
     //Prueba para ver si imprime:
     //echo $algo;
     //echo $vamos;
 
-    //$width = 580;
-    //$height = 580;
+    $width = 550;
+    $height = 550;
     $scalePercent = .9;
 
     ?>
@@ -187,24 +200,11 @@ $yMin = $responseData[0]['initial_y'];
 
     <p id="text1"></p>
     <!--p id="text2"></p-->
-
-<form method="post">
     <input type="hidden" id="posX" name="positionX" value="posX">
     <input type="hidden" id="posY" name="positionY" value="posY">
-    <input type="submit">
-</form>
-    <?php
-      //echo "estos son los datos" . $_REQUEST['positionX'];
-      //echo "estos son los datos" . $_REQUEST['positionY'];
-     ?>
 
-     <?php
-      $width = $_REQUEST['positionX'];
-      $height = $_REQUEST['positionY'];
-      ?>
-
-<input type='file' id='getval' name="background-image"/><br/><br/>
-<div class="coords">
+    <input type='file' id='getval' name="background-image"/><br/><br/>
+    <div class="coords">
 
     <?php
 
@@ -228,11 +228,11 @@ $yMin = $responseData[0]['initial_y'];
 		$_x2 = (($x2-$xMin)*($scalePercent*$width))/($xMax-$xMin)+((1-$scalePercent)/2)*$width;
 		$_y2 = (($yMax-$y2)*($scalePercent*$height))/($yMax-$yMin)+((1-$scalePercent)/2)*$height;
 
-		echo $x1 . "\n";
-		echo $y1 . "\n";
+		//echo $x1 . "\n";
+		//echo $y1 . "\n";
 
-		echo $x2 . "\n";
-		echo $y2 . "\n";
+		//echo $x2 . "\n";
+		//echo $y2 . "\n";
 
 		//echo $beacon_id . " OTRO: " . $mapeoBeacons[$storageZoneCounter];
 
@@ -246,6 +246,7 @@ $yMin = $responseData[0]['initial_y'];
                 <circle cx=\"" . $_x2 . "\" cy=\"" . $_y2 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
                 <line id=\"linea".$mapeoBeacons[$storageZoneCounter]."\" x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(255,0,0);stroke-width:5\" />";
                 $storageZoneCounter++;
+
             }
 
             //Sin producto//
@@ -283,20 +284,7 @@ $yMin = $responseData[0]['initial_y'];
 
 
 
-  <script>
-    document.getElementById('getval').addEventListener('change', readURL, true);
-    function readURL(){
-    var file = document.getElementById("getval").files[0];
-    var reader = new FileReader();
-    reader.onloadend = function(){
-    document.getElementById('graph').style.backgroundImage = "url(" + reader.result + ")";
-    }
-      if(file){
-      reader.readAsDataURL(file);
-      }else{
-      }
-}
-  </script>
+
 
 	</body>
 
@@ -306,6 +294,54 @@ $yMin = $responseData[0]['initial_y'];
   		   src="https://code.jquery.com/jquery-3.2.1.min.js"
     	   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   		   crossorigin="anonymous">
+  </script>
+
+  <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+  </script>
+
+  <script>
+    document.getElementById('getval').addEventListener('change', readURL, true);
+    function readURL(){
+    var file = document.getElementById("getval").files[0];
+    var reader = new FileReader();
+    reader.onloadend = function(){
+    document.getElementById('graph').style.backgroundImage = "url(" + reader.result + ")";
+
+    }
+      if(file){
+      reader.readAsDataURL(file);
+
+      }
+      else{
+      }
+
+      var _URL = window.URL || window.webkitURL;
+
+      $("#getval").change(function(e) {
+      var file2, img;
+
+
+        if ((file2 = this.files[0])) {
+          img = new Image();
+          img.onload = function() {
+            alert(this.width + " " + this.height);
+
+          };
+          img.onerror = function() {
+            alert( "not a valid file: " + file.type);
+          };
+          img.src = _URL.createObjectURL(file2);
+
+
+        }
+
+        var width = this.width;
+        var height = this.height;
+
+      });
+
+  }
   </script>
 
   <script>
