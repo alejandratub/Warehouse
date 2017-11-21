@@ -25,7 +25,6 @@
 				<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 				<!-- Owl-carousel-CSS -->
 				<link href="css/owl.carousel.css" rel="stylesheet">
-				<link rel="stylesheet" href="css/team.css" type="text/css" media="all" />
 				<link href="css/styleT.css" rel="stylesheet" type="text/css" media="all" />
 				<!-- font-awesome-icons -->
 				<link href="css/font-awesome.css" rel="stylesheet">
@@ -33,6 +32,7 @@
 				<link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
 				    rel="stylesheet">
 				<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+				<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 		 	</head>
 <body>
 <?php
@@ -67,6 +67,7 @@
             <th>Completed</th>
             </tr>";
             
+            $solution_id = $_POST['solution_id'];
             foreach ($data as $row)
 		    {
                 $completed = $row['completed'];
@@ -76,10 +77,37 @@
                 echo "<td>" . $row['name'] . "</td>";
                 echo "<td>" . $row['initial_section'] . "</td>";
                 echo "<td>" . $row['final_section'] . "</td>";
-                echo "<td><input type=\"checkbox\" value = $completed name=$step ></div></td>";
+                
+                if($completed=='t')
+                    echo "<td><input type=\"checkbox\" onclick=\"toggleStep(".$row['step'].", $solution_id)\" value = $completed checked name=\"".$row['step']."\" ></div></td>";
+                else
+                    echo "<td><input type=\"checkbox\" onclick=\"toggleStep(".$row['step'].", $solution_id)\" value = $completed name=\"".$row['step']."\" ></div></td>";
             }
+    
             echo "</table> </div>";
          ?>
 
 </body>
+
+<script>
+
+  function toggleStep(step, solution_id)
+  {
+    var json = "[{\"s\":\"updateChecklist\", \"step\":" + step + ", \"solution_id\":" +solution_id +" }]";
+    
+    $.ajax({
+    type: "POST",
+    beforeSend: function(request) {
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+    },
+    url: "https://webservice-warehouse.run.aws-usw02-pr.ice.predix.io/index.php",
+    data: json,
+    processData: false,
+    success: function(msg) {
+        console.log(msg);
+    }
+    });
+  }
+</script>
 </html>

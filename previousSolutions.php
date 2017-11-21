@@ -66,8 +66,10 @@
                 
                 //Si se mando un solution_id en la funcion actualizar() se selecciona en el combobox
                 if($_POST['solutionValue']==$solution_id)
-                    $comboInst .=" <option value='".$solution_id."' selected=\"selected\">".$solution_id."</option>";
-                
+                {
+                    //echo "ESCOGIDA " . $solution_id; 
+                    $comboSolutions .=" <option value='".$solution_id."' selected=\"selected\">".$text."</option>";
+                }
                 //else
                 $comboSolutions .=" <option value='".$solution_id."'>".$text."</option>";
             }
