@@ -32,7 +32,6 @@
 				<link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
 				    rel="stylesheet">
 				<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
-				<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 		 	</head>
 <body>
 <?php
@@ -88,6 +87,8 @@
          ?>
 
 </body>
+
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>				
 
 <script>
 

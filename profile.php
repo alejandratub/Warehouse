@@ -80,7 +80,7 @@
 
 					<div class="center-button">
          <div><a class="button hvr-ripple-in"  value="editar" name="editar " href ="editProfile.php">Edit Profile</a></div>
-         <div><a class="button hvr-ripple-in"  value="editarMapa" name="editarMapa " href ="jquery.php">Edit Map</a></div>
+         <div><a class="button hvr-ripple-in"  value="editarMapa" name="editarMapa " href ="editmap.php">Edit Map</a></div>
        </div>
      </body>
 </html>

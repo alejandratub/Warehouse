@@ -1,26 +1,9 @@
-<?php
-  if (isset($_POST['this.height']) ) {
-    $height = $_POST['this.height'];
-    echo $height;
-    return;
-  }
-  if (isset($_POST['this.width']) ) {
-    $width = $_POST['this.width'];
-    echo $width;
-    return;
-  }
-
-?>
 <!DOCTYPE html>
 <html lang="es-MX">
 
 <head>
-
-   <!--link rel="stylesheet" href="warehouse.css" type="text/css" /-->
    <link rel="stylesheet" href="css/warehouse.css">
-   <!--meta name="viewport" content="width=device-width, initial-scale=1.0"-->
    <title>Mapa WH GE</title>
-
 </head>
 
 
@@ -67,21 +50,6 @@ if($response2 === FALSE)
 $responseData = json_decode($response, TRUE);
 $responseData2 = json_decode($response2, TRUE);
 
-//$responseData[$i]['id'];
-
-//echo count($responseData);
-
-//echo count($responseData2);
-
-//echo $response;
-
-//echo $responseData;
-
-//echo $response2;
-
-//echo $responseData2;
-//ujgfhj
-//var_dump($responseData2);
 $rows=array();
 $floor = 0;
 $name = 0;
@@ -111,13 +79,6 @@ for($e=0;$e<count($responseData2);$e++)
     $infoZonas[$beacon] = $infoZonas[$beacon] . $nombre . "<br>";
 }
 
-//for para imprimir el mapeo de beacons
-/*for($e=0;$e<count($mapeoBeacons);$e++)
-{
-    echo $mapeoBeacons[$e];
-    echo "<br>";
-}*/
-
 $xMax = 0;
 $yMax = 0;
 $xMin = $responseData[0]['initial_x'];
@@ -134,74 +95,48 @@ $yMin = $responseData[0]['initial_y'];
 		   // comparación para obtener initial_x e initial_y
 
 		   if($xi>$xMax)
-		   {
 		      $xMax = $xi;
-		   }
 
 		   if($yi>$yMax)
-		   {
 		      $yMax = $yi;
-		   }
 
 		   if($xi<$xMin)
-		   {
-
 		      $xMin = $xi;
-		   }
+
 		   if($yi<$yMin)
-		   {
 		      $yMin = $yi;
-		   }
 
 		   // comparación para obtener final_x y final_y
-
 		   if($xf<$xMin)
-		   {
 		      $xMin = $xf;
-		   }
 
 		   if($yf<$yMin)
-		   {
 		      $yMin = $yf;
-		   }
 
 		   if($xf>$xMax)
-		   {
 		      $xMax = $xf;
-		   }
 
 		   if($yf>$yMax)
-		   {
 		      $yMin = $yf;
-		   }
 
 		}
-
-		//echo $xMin;
-		//echo $xMax;
-		//echo $yMin;
-		//echo $yMax;
-		//echo "<label>$xMin</label>";
-
-	  // proceso de escalamiento
-    //$algo = ((3-$xMin)*1000)/($xMax-$xMin);
-    //$vamos = ((3-$yMin)*1000)/($yMax-$yMin);
-    //Prueba para ver si imprime:
-    //echo $algo;
-    //echo $vamos;
-
-    $width = 550;
-    $height = 550;
+		
+    //Get width and height from javascript form//
+    if(isset($_POST['input_width']))
+        $width = $_POST['input_width'];
+    if(isset($_POST['input_height']))
+        $height = $_POST['input_height'];
+    //$width = 550;
+    //$height = 550;
     $scalePercent = .9;
 
     ?>
 
     <body>
 
-    <p id="text1"></p>
-    <!--p id="text2"></p-->
-    <input type="hidden" id="posX" name="positionX" value="posX">
-    <input type="hidden" id="posY" name="positionY" value="posY">
+    <!--p id="text1"></p-->
+    <!--input type="hidden" id="posX" name="positionX" value="posX">
+    <input type="hidden" id="posY" name="positionY" value="posY"-->
 
     <input type='file' id='getval' name="background-image"/><br/><br/>
     <div class="coords">
@@ -227,14 +162,6 @@ $yMin = $responseData[0]['initial_y'];
 
 		$_x2 = (($x2-$xMin)*($scalePercent*$width))/($xMax-$xMin)+((1-$scalePercent)/2)*$width;
 		$_y2 = (($yMax-$y2)*($scalePercent*$height))/($yMax-$yMin)+((1-$scalePercent)/2)*$height;
-
-		//echo $x1 . "\n";
-		//echo $y1 . "\n";
-
-		//echo $x2 . "\n";
-		//echo $y2 . "\n";
-
-		//echo $beacon_id . " OTRO: " . $mapeoBeacons[$storageZoneCounter];
 
         //Zonas de almacenamiento (Rojas) con producto//
 		if($type >= 2)
@@ -280,27 +207,15 @@ $yMin = $responseData[0]['initial_y'];
 
 	</svg>
 </div>
-
-
-
-
-
-
 	</body>
+   <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 
 
-
-	<script
-  		   src="https://code.jquery.com/jquery-3.2.1.min.js"
-    	   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  		   crossorigin="anonymous">
-  </script>
-
-  <script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
-  </script>
-
+  <!--script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+  </script-->
   <script>
+  
     document.getElementById('getval').addEventListener('change', readURL, true);
     function readURL(){
     var file = document.getElementById("getval").files[0];
@@ -309,13 +224,11 @@ $yMin = $responseData[0]['initial_y'];
     document.getElementById('graph').style.backgroundImage = "url(" + reader.result + ")";
 
     }
-      if(file){
+      /*if(file){
       reader.readAsDataURL(file);
-
-      }
-      else{
-      }
-
+      }*/
+      
+      reader.readAsDataURL(file);
       var _URL = window.URL || window.webkitURL;
 
       $("#getval").change(function(e) {
@@ -324,21 +237,38 @@ $yMin = $responseData[0]['initial_y'];
 
         if ((file2 = this.files[0])) {
           img = new Image();
-          img.onload = function() {
+          
+          //Get width and height from uploaded image//
+          img.onload = function() 
+          {
             alert(this.width + " " + this.height);
+            var width = this.width;
+            var height = this.height;
+            
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "editmap.php");
 
+            var input_width = document.createElement("input");
+            input_width.setAttribute("type", "hidden");
+            input_width.setAttribute("name", "input_width");
+            input_width.setAttribute("value",width);
+
+            var input_height = document.createElement("input");
+            input_height.setAttribute("type", "hidden");
+            input_height.setAttribute("name", "input_height");
+            input_height.setAttribute("value",height);
+
+            form.appendChild(input_width);
+            form.appendChild(input_height);
+            document.body.appendChild(form);
+            form.submit();
           };
           img.onerror = function() {
             alert( "not a valid file: " + file.type);
           };
           img.src = _URL.createObjectURL(file2);
-
-
         }
-
-        var width = this.width;
-        var height = this.height;
-
       });
 
   }
@@ -357,22 +287,18 @@ $yMin = $responseData[0]['initial_y'];
       });
   </script>
 
-   		<script>
+    <script>
 
-   	 $(document).ready(function(){
-   			 	//for($i=0;$i<$j;$i++)
-          <?php
-   			 	for($i=0;$i<$storageZoneCounter;$i++)
-   			 	{
-                    $beacon_id = $mapeoBeacons[$i];
-    				echo "  $('#linea".$beacon_id."').click(function(){
-    							alert(\"Zone: ".$beacon_id. $infoZonas[$beacon_id] ."\");
-    						});";
-    			 }
-           ?>
-         });
-
-    // impresion para la cantidad de zona de alamacenamiento
-    //echo $storageZoneCounter;
-
-   		</script>
+    $(document).ready(function(){
+            for($i=0;$i<$j;$i++)
+        <?php
+            for($i=0;$i<$storageZoneCounter;$i++)
+            {
+                $beacon_id = $mapeoBeacons[$i];
+                echo "  $('#linea".$beacon_id."').click(function(){
+                            alert(\"Zone: ".$beacon_id. $infoZonas[$beacon_id] ."\");
+                        });";
+                }
+        ?>
+        });
+    </script>
