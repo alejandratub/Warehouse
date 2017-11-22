@@ -120,7 +120,7 @@ $yMin = $responseData[0]['initial_y'];
 		      $yMin = $yf;
 
 		}
-		
+
     //Get width and height from javascript form//
     if(isset($_POST['input_width']))
         $width = $_POST['input_width'];
@@ -215,7 +215,7 @@ $yMin = $responseData[0]['initial_y'];
     src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
   </script-->
   <script>
-  
+
     document.getElementById('getval').addEventListener('change', readURL, true);
     function readURL(){
     var file = document.getElementById("getval").files[0];
@@ -224,10 +224,10 @@ $yMin = $responseData[0]['initial_y'];
     document.getElementById('graph').style.backgroundImage = "url(" + reader.result + ")";
 
     }
-      /*if(file){
+      if(file){
       reader.readAsDataURL(file);
-      }*/
-      
+      }
+
       reader.readAsDataURL(file);
       var _URL = window.URL || window.webkitURL;
 
@@ -237,14 +237,14 @@ $yMin = $responseData[0]['initial_y'];
 
         if ((file2 = this.files[0])) {
           img = new Image();
-          
+
           //Get width and height from uploaded image//
-          img.onload = function() 
+          img.onload = function()
           {
             alert(this.width + " " + this.height);
             var width = this.width;
             var height = this.height;
-            
+
             var form = document.createElement("form");
             form.setAttribute("method", "post");
             form.setAttribute("action", "editmap.php");
