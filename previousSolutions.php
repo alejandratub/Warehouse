@@ -123,9 +123,9 @@
                     <select id = "solution_id" name="solution_id" onchange="actualizar()"><?php echo $comboSolutions;?></select>
                     </select></div>
             <!--/div-->
-            <div><button class="btn-default" onclick="submitForm('arrangeInstructions.php')" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instructions</button></div>
-            <div><button class="btn-default" onclick="submitForm('initialState.php')" value=" Estado Inicial" type="seleccionar" name="inicial" >Initial Warehouse State</button></div>
-            <div><button class="btn-default" onclick="submitForm('finalState.php')" value=" Estado Final" type="seleccionar" name="seleccionar" >Final Warehouse State</button></div>
+            <div><button class="btn btn-primary" onclick="submitForm('arrangeInstructions.php')" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instructions</button></div>
+            <div><button class="btn btn-primary" onclick="submitForm('initialState.php')" value=" Estado Inicial" type="seleccionar" name="inicial" >Initial Warehouse State</button></div>
+            <div><button class="btn btn-primary" onclick="submitForm('finalState.php')" value=" Estado Final" type="seleccionar" name="seleccionar" >Final Warehouse State</button></div>
         </form>
         
 </body>
