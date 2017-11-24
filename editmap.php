@@ -222,11 +222,11 @@ $yMin = $responseData[0]['initial_y'];
     var reader = new FileReader();
     reader.onloadend = function(){
     document.getElementById('graph').style.backgroundImage = "url(" + reader.result + ")";
-
     }
-      /*if(file){
+    
+      if(file){
       reader.readAsDataURL(file);
-      }*/
+      }
       
       reader.readAsDataURL(file);
       var _URL = window.URL || window.webkitURL;
