@@ -51,8 +51,13 @@
         $response = file_get_contents('https://webservice-warehouse.run.aws-usw02-pr.ice.predix.io', FALSE, $context);
         $response2 = file_get_contents('https://webservice-warehouse.run.aws-usw02-pr.ice.predix.io', FALSE, $context2);
 
-            
         $solution_id = $_POST['solution_id'];
+        
+        //Zona actualmente seleccionada//
+        //Por default se selecciona la primera//
+        if(is_numeric($_POST['zonaSeleccionada']))
+            $zonaSeleccionada = $_POST['zonaSeleccionada'];
+        
         //REARRANGEMENT INSTRUCTIONS//
         $instructionsRequest = array(
             's' => 'viewInstructions',
@@ -79,7 +84,6 @@
             die('Error');
         }
 
-        // para imprimir el json de la página.
 
 
         $responseData = json_decode($response, TRUE);
@@ -92,6 +96,8 @@
 
         $storageZoneCounter = 0;
         $instCounter = 0;
+        $defaultDestinationSelected = 0;        //Variable to determine if the default destination has been selected//
+        
         for($e=0;$e<count($responseData2);$e++)
         {
             $beacon = $responseData2[$e]['beacon_id'];          //Zona de beacon actual//
@@ -114,6 +120,7 @@
                                                             <th>Product</th>
                                                             <th>Move To</th>
                                                             <th>Done</th>
+                                                            <th>View</th>
                                                             </tr>";
             }
 
@@ -122,6 +129,11 @@
             {
                 $beaconsAgregados[$beacon] = 1;
                 $mapeoBeacons[$storageZoneCounter] = $beacon;
+                
+                //Selecciona la primera zona disponible por default si no se ha seleccionado todavia//
+                if(!isset($zonaSeleccionada) && $storageZoneCounter==0)
+                    $zonaSeleccionada=$beacon;
+                
                 $storageZoneCounter++;
             }
             
@@ -129,8 +141,10 @@
             $seccionInicialInst = $instructionsData[$instCounter]['initial_section'];
             if($seccionInicialInst==$section_id)
             {
+                $destination = $instructionsData[$instCounter]['final_beacon'];
+                
                 $infoZonas[$beacon] = $infoZonas[$beacon] . "<tr><td>" . $nombre . "</td>";
-                $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>" . $instructionsData[$instCounter]['final_section'] . "</td>";
+                $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>Z" . $destination ." - F" . $instructionsData[$instCounter]['final_floor'] . "</td>";
                 
                 $completed = $instructionsData[$instCounter]['completed'];
                 $step = $instructionsData[$instCounter]['step'];
@@ -138,19 +152,40 @@
                 if($completed=='t')
                 {
                     $infoZonas[$beacon] = $infoZonas[$beacon] . "<td><input type=\"checkbox\" onclick=\"toggleStep($step , $solution_id)\" value = $completed checked 
-                    name=$step></td></tr>";
+                    name=$step></td>";
                 }
                 else
                 {
                     $infoZonas[$beacon] = $infoZonas[$beacon] . "<td><input type=\"checkbox\" onclick=\"toggleStep($step , $solution_id)\" value = $completed
-                    name=$step></td></tr>";
+                    name=$step></td>";
                 }
-
+                
+                //Establece una zona de destino por default//
+                if(isset($_POST['destination']))
+                    $viewedDestination= $_POST['destination'];
+                else if($defaultDestinationSelected==0)
+                {
+                    $defaultDestinationSelected=1;
+                    $viewedDestination = $destination;
+                }
+                
+                //Check the box corresponding to the destination zone currently viewed//
+                if($viewedDestination==$destination)
+                {
+                    $infoZonas[$beacon] = $infoZonas[$beacon] . "<td><input type=\"checkbox\" onclick=\"seleccionarLinea($zonaSeleccionada,$solution_id,$destination)\" checked></td>";             
+                }
+                else
+                {
+                    $infoZonas[$beacon] = $infoZonas[$beacon] . "<td><input type=\"checkbox\" onclick=\"seleccionarLinea($zonaSeleccionada,$solution_id,$destination)\" ></td>";     
+                }
+                
+                
                 $instCounter++;
             }
             else
             {
                 $infoZonas[$beacon] = $infoZonas[$beacon] . "<tr><td>" . $nombre . "</td>";
+                $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>" . "-" . "</td>";
                 $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>" . "-" . "</td>";
                 $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>" . "-" . "</td></tr>";
             }
@@ -214,6 +249,14 @@
                 <div class='row'>
                     <div class='col-md-12 col-sm-12'>
                         <h1 class='text-center'>Map Instructions</h1><br><br>
+                        <div class='panel panel-info'>
+                            <div class='panel-body'>
+                                Click on a red zone to see the products it contains, then click on a view checkbox on the table 
+                                to the right to view the destination zone that corresponds to this instruction.
+                                <br>
+                                After completing an arrangement check the box in the Done column that corresponds to the row of that instruction.
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class='row'>
@@ -227,12 +270,7 @@
                         
                         $storageZoneCounter = 0;        //Zonas de almacenamiento tienen indices positivos
                         
-                        //Zona actualmente seleccionada//
-                        //Por default se selecciona la primera//
-                        if(is_numeric($_POST['zonaSeleccionada']))
-                            $zonaSeleccionada = $_POST['zonaSeleccionada'];
-                        else
-                            $zonaSeleccionada = $mapeoBeacons[0];
+
                         
                         for ($j=0;$j<count($responseData);$j++)
                         {
@@ -256,18 +294,29 @@
                                 //Con producto//
                                 if($beacon_id == $mapeoBeacons[$storageZoneCounter])
                                 {
-                                    if($beacon_id != $zonaSeleccionada)
+                                    //Zona inicial (Verde)
+                                    if($beacon_id == $zonaSeleccionada)
                                     {
                                         echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
                                         <circle cx=\"" . $_x2 . "\" cy=\"" . $_y2 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
-                                        <line id=\"linea".$mapeoBeacons[$storageZoneCounter]."\" x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(255,0,0);stroke-width:5\" onclick=\"seleccionarLinea($beacon_id, $solution_id)\"/>";
+                                        <line id=\"linea".$mapeoBeacons[$storageZoneCounter]."\" x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(0,255,0);stroke-width:4\"/>";
                                     }
                                     
+                                    //Zona final (Morado)
+                                    else if($beacon_id==$viewedDestination)
+                                    {
+                                        echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
+                                        <circle cx=\"" . $_x2 . "\" cy=\"" . $_y2 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
+                                        <line id=\"linea".$mapeoBeacons[$storageZoneCounter]."\" x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(192,0,192);stroke-width:4\" onclick=\"seleccionarLinea($beacon_id, $solution_id, $viewedDestination)\"/>";
+                                    }
+                                    
+                                    
+                                    //Otras (Rojo)
                                     else
                                     {
                                         echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
                                         <circle cx=\"" . $_x2 . "\" cy=\"" . $_y2 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
-                                        <line id=\"linea".$mapeoBeacons[$storageZoneCounter]."\" x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(0,255,0);stroke-width:5\" onclick=\"seleccionarLinea($beacon_id)\"/>";
+                                        <line id=\"linea".$mapeoBeacons[$storageZoneCounter]."\" x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(255,0,0);stroke-width:4\" onclick=\"seleccionarLinea($beacon_id, $solution_id, $viewedDestination)\"/>";
                                     }
                                     $storageZoneCounter++;
 
@@ -276,11 +325,22 @@
                                 //Sin producto//
                                 else
                                 {
-                                    echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"orange\" />
-                                <circle cx=\"" . $_x2 . "\" cy=\"" . $_y2 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"orange\" />
-                                <line x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(255,165,0);stroke-width:4\" />";
+                                    //Zona final (Morado)
+                                    if($beacon_id==$viewedDestination)
+                                    {
+                                        echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
+                                        <circle cx=\"" . $_x2 . "\" cy=\"" . $_y2 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
+                                        <line id=\"linea".$mapeoBeacons[$storageZoneCounter]."\" x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(192,0,192);stroke-width:4\"/>";
+                                    }
+                                    
+                                    //Otras (Naranja)
+                                    else
+                                    {
+                                        echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"orange\" />
+                                        <circle cx=\"" . $_x2 . "\" cy=\"" . $_y2 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"orange\" />
+                                        <line x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(255,165,0);stroke-width:4\" />";
+                                    }
                                 }
-
                             }
 
                             //Pasillos (Grises)//
@@ -303,6 +363,38 @@
                     ?>  
                             </svg>
                         </picture>
+                            <div class='panel panel-primary text-center'>
+                                <div class='row'>
+                                    <div class = 'col-md-12 col-sm-12'>
+                                        <h2>Legend</h2>
+                                    </div>
+                                </div>
+                                <div class='row panel-body'>
+                                    <div class = 'col-md-2 col-sm-2'>
+                                        <svg height='230'>
+                                            <line x1="0" y1 ="10" x2 ="70" y2="10" style="stroke:rgb(0,255,0);stroke-width:4"/>
+                                            <line x1="0" y1 ="49" x2 ="70" y2="49" style="stroke:rgb(192,0,192);stroke-width:4"/>
+                                            <line x1="0" y1 ="88" x2 ="70" y2="88" style="stroke:rgb(255,0,0);stroke-width:4"/>
+                                            <line x1="0" y1 ="127" x2 ="70" y2="127" style="stroke:rgb(255,165,0);stroke-width:4"/>
+                                            <line x1="0" y1 ="166" x2 ="70" y2="166" style="stroke:rgb(0,0,255);stroke-width:4"/>
+                                            <line x1="0" y1 ="205" x2 ="70" y2="205" style="stroke:rgb(100,100,100);stroke-width:4"/>
+                                        </svg>
+                                    </div>
+                                    <div class = 'col-md-10 col-sm-10 text-left'>
+                                        <h4>Selected Initial Zone</h4>
+                                        <br>
+                                        <h4>Selected Final Zone</h4>
+                                        <br>
+                                        <h4>Storage zone with product</h4>
+                                        <br>
+                                        <h4>Storage zone without product</h4>
+                                        <br>
+                                        <h4>Highly frequented zone</h4>
+                                        <br>
+                                        <h4>Corridor</h4>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                     <div class='col-md-6 col-sm-6'>
                         <div class='panel panel-primary'>
@@ -318,7 +410,7 @@
         <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     
         <script>
-            function seleccionarLinea(zonaSeleccionada, solution_id)
+            function seleccionarLinea(zonaSeleccionada, solution_id, dest_id)
             {
                 var form = document.createElement("form");
                 form.setAttribute("method", "post");
@@ -334,6 +426,12 @@
                 solution.setAttribute("name", 'solution_id');
                 solution.setAttribute("value", solution_id);
                 
+                var destination = document.createElement('input');
+                destination.setAttribute("type", 'hidden');
+                destination.setAttribute("name", 'destination');
+                destination.setAttribute("value", dest_id);
+                
+                form.appendChild(destination)
                 form.appendChild(zona);
                 form.appendChild(solution);
                 document.body.appendChild(form);

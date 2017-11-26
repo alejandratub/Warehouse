@@ -67,30 +67,18 @@
                 //Si se mando un solution_id en la funcion actualizar() se selecciona en el combobox
                 if($_POST['solutionValue']==$solution_id)
                 {
-                    //echo "ESCOGIDA " . $solution_id; 
+                    $defaultSolutionID = $_POST['solutionValue'];
                     $comboSolutions .=" <option value='".$solution_id."' selected=\"selected\">".$text."</option>";
                 }
-                //else
-                $comboSolutions .=" <option value='".$solution_id."'>".$text."</option>";
+                else
+                    $comboSolutions .=" <option value='".$solution_id."'>".$text."</option>";
             }
             
-            //Verifica si se recibio informacion a partir de seleccion de solucion del combobox//
-            if(isset($_POST['solutionValue']))
-            {
-                $infoData = array(
-                's' => 'solutionInfo',
-                'solution_id' => $_POST['solutionValue']
-                );
-            }
-            
-            //Si no se escogio alguna solucion por default se muestra la informacion de la última//
-            else
-            {
+            //Obtiene información de la solución seleccionada//
                 $infoData = array(
                 's' => 'solutionInfo',
                 'solution_id' => $defaultSolutionID
                 );
-            }
             
             $infoSolucion = editarperfil($infoData);
             foreach($infoSolucion as $row)
@@ -106,7 +94,7 @@
         ?>
         
         <div class='container'>
-            <form id= "sol_form" method="post">
+            <!--form id= "sol_form" method="post"-->
                 <div class='row'>
                     <div class='col-md-12 col-sm-12'>
                         <h1>Previous Solutions</h1><br>
@@ -145,8 +133,20 @@
                         </div>
                     </div>
                     <div class='col-md-6 col-sm-6'>
-                        <div><button class="btn btn-default" onclick="submitForm('arrangeInstructions.php')" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instruction List</button></div>
-                        <div><button class="btn btn-default" onclick="submitForm('editmap.php')" value="Visual Instructions" type="seleccionar" name="inicial" >Map Instructions</button></div>
+                        <form action="arrangeInstructions.php" method="post">
+                            <?php
+                                echo "<input type=\"hidden\" name=\"solution_id\" value=$defaultSolutionID>" 
+                            ?>
+                            <div><button class="btn btn-default" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instruction List</button></div>
+                        </form>
+                        
+                        <form action="editmap.php" method="post">
+                            <?php
+                                echo "<input type=\"hidden\" name=\"solution_id\" value=$defaultSolutionID>" 
+                            ?>
+                            <div><button class="btn btn-default" value="Visual Instructions" type="seleccionar" name="inicial" >Map Instructions</button></div>
+                        </form>
+                        
                     </div>
                 </form>
             </div>
@@ -173,26 +173,4 @@
       form.submit();
   }
 </script>
-
-
-<script>
-  function submitForm(action) 
-  {
-    var form = document.getElementById('sol_form');
-    form.setAttribute("method", "post");
-    form.action = action;
-    
-    var solutionSelected = document.getElementById("solution_id").value;
-    var solutionValue = document.createElement("input");
-    solutionValue.setAttribute("type", "hidden");
-    solutionValue.setAttribute("name", "solutionValue");
-    solutionValue.setAttribute("value", solutionSelected);
-    form.appendChild(solutionValue);
-    
-    document.body.appendChild(form);
-    form.submit();
-  }
-</script>
-
-
 </html>

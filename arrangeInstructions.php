@@ -42,9 +42,6 @@
             require('functions/editar.php');
             navbar();
             
-            ?><br><br>
-            <br><br><h1>Instruction List</h1><?php
-            
             //Get rearrangement instructions with this solution ID//
             $postData = array(
                 's' => 'viewInstructions',
@@ -55,37 +52,51 @@
             //Combo box for previous solutions//
             $data = editarperfil($postData);
 
-            //Table for showing solution steps//
-            echo "<br><div> <table align='center'>
-            <tr>
-            <th>Step</th>
-            <th>Ean</th>
-            <th>Name</th>
-            <th>Initial Section</th>
-            <th>Final Section</th>
-            <th>Completed</th>
-            </tr>";
-            
-            $solution_id = $_POST['solution_id'];
-            foreach ($data as $row)
-		    {
-                $completed = $row['completed'];
-                echo "<tr>";
-                echo "<td>" . $row['step'] . "</td>";
-                echo "<td>" . $row['ean'] . "</td>";
-                echo "<td>" . $row['name'] . "</td>";
-                echo "<td>" . $row['initial_section'] . "</td>";
-                echo "<td>" . $row['final_section'] . "</td>";
+            ?>
+            <div class='container'>
+                <div class='row'>
+                    <div class='col-sm-12'>
+                        <h1 class='text-center'>Instruction List<br><br></h1>
+                        <div class='panel panel-info'>
+                            <div class='panel-body'>
+                                After completing an arrangement check the box in the Completed column that corresponds to the row of that instruction.
+                            </div>
+                        </div>
+                        
+                        <?php
+                        //Table for showing solution steps//
+                        echo "<br><div> <table align='center' class='table-condensed'>
+                        <tr>
+                        <th>Step</th>
+                        <th>Ean</th>
+                        <th>Name</th>
+                        <th>Initial Section</th>
+                        <th>Final Section</th>
+                        <th>Completed</th>
+                        </tr>";
+                        
+                        $solution_id = $_POST['solution_id'];
+                        foreach ($data as $row)
+                        {
+                            $completed = $row['completed'];
+                            echo "<tr>";
+                            echo "<td>" . $row['step'] . "</td>";
+                            echo "<td>" . $row['ean'] . "</td>";
+                            echo "<td>" . $row['name'] . "</td>";
+                            echo "<td>" . $row['initial_section'] . "</td>";
+                            echo "<td>" . $row['final_section'] . "</td>";
+                            
+                            if($completed=='t')
+                                echo "<td><input type=\"checkbox\" onclick=\"toggleStep(".$row['step'].", $solution_id)\" value = $completed checked name=\"".$row['step']."\" ></div></td>";
+                            else
+                                echo "<td><input type=\"checkbox\" onclick=\"toggleStep(".$row['step'].", $solution_id)\" value = $completed name=\"".$row['step']."\" ></div></td>";
+                        }
                 
-                if($completed=='t')
-                    echo "<td><input type=\"checkbox\" onclick=\"toggleStep(".$row['step'].", $solution_id)\" value = $completed checked name=\"".$row['step']."\" ></div></td>";
-                else
-                    echo "<td><input type=\"checkbox\" onclick=\"toggleStep(".$row['step'].", $solution_id)\" value = $completed name=\"".$row['step']."\" ></div></td>";
-            }
-    
-            echo "</table> </div>";
-         ?>
-
+                        echo "</table> </div>";
+                        ?>
+                    </div>
+                </div>
+            </div>
 </body>
 
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>				
