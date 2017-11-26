@@ -104,29 +104,54 @@
                 $created_at = $row['created_at'];
             }
         ?>
-            <br><br> <h1>Previous Solutions</h1>
-        <?php
-            echo "<label>Warehouse optimized: $wh_name </label><br>";
-            echo "<label>Solution created at: $created_at </label><br>";
-            echo "<label>Solution created by: $u_name </label><br>";
-            echo "<label>Start capture date: $since </label><br>";
-            echo "<label>End capture date: $until  </label><br>";
-            echo "<label>Time optimization: $time_reduction </label/><br>";
-            echo "<label>Distance optimization: $distance_reduction </label><br>";
-         ?>
+        
+        <div class='container'>
+            <form id= "sol_form" method="post">
+                <div class='row'>
+                    <div class='col-md-12 col-sm-12'>
+                        <h1>Previous Solutions</h1><br>
+                    </div>
+                </div>
+                
+                <div class='row text-center'>
+                    <div class='col-md-12 col-sm-12'>
+                        <div><label>Select the previous solution you would like to see:</label><br></div>
+                        <select id = "solution_id" name="solution_id" onchange="actualizar()"><?php echo $comboSolutions;?></select>
+                        <br><br>
+                    </div>
+                </div>
+                
+                <div class='row'>
+                    <div class='col-md-6 col-sm-6'>
+                        <div class='panel panel-primary'>
+                        <?php
+                            $timeF = number_format((float)$time_reduction, 2, '.', '');
+                            $distF = number_format((float)$distance_reduction, 2, '.', '');
+                            echo "<h2 class='text-center'>Optimization</h2><br>";
+                            echo "<h3>Time: $timeF% </h3><br>";
+                            echo "<h3>Distance: $distF%</h3><br>";
+                        ?>
+                        </div>
+                        
+                        <div class='panel panel-primary'>
+                        <?php
+                            echo "<h2 class='text-center'>General Information</h2><br>"; 
+                            echo "<label>Warehouse: $wh_name </label><br>";
+                            echo "<label>Created at: $created_at </label><br>";
+                            echo "<label>Created by: $u_name </label><br>";
+                            echo "<label>Start capture date: $since </label><br>";
+                            echo "<label>End capture date: $until  </label><br>";
+                        ?>
+                        </div>
+                    </div>
+                    <div class='col-md-6 col-sm-6'>
+                        <div><button class="btn btn-default" onclick="submitForm('arrangeInstructions.php')" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instruction List</button></div>
+                        <div><button class="btn btn-default" onclick="submitForm('editmap.php')" value="Visual Instructions" type="seleccionar" name="inicial" >Map Instructions</button></div>
+                    </div>
+                </form>
+            </div>
+            
 
-           <!--form action=" visualizarweb/html/warehouse.html" method="post"-->
-        <form id= "sol_form" method="post">
-            <!--div class="right-block"-->
-            <!--Get the dates where the solutions have been generated-->
-            <div><label>Select the previous solution you would like to see:</label><br><br></div>
-                    <select id = "solution_id" name="solution_id" onchange="actualizar()"><?php echo $comboSolutions;?></select>
-                    </select></div>
-            <!--/div-->
-            <div><button class="btn btn-primary" onclick="submitForm('arrangeInstructions.php')" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instructions</button></div>
-            <div><button class="btn btn-primary" onclick="submitForm('initialState.php')" value=" Estado Inicial" type="seleccionar" name="inicial" >Initial Warehouse State</button></div>
-            <div><button class="btn btn-primary" onclick="submitForm('finalState.php')" value=" Estado Final" type="seleccionar" name="seleccionar" >Final Warehouse State</button></div>
-        </form>
         
 </body>
 

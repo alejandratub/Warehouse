@@ -43,7 +43,7 @@
             navbar();
             
             ?><br><br>
-            <br><br> <h1>Arrangement Instructions</h1><?php
+            <br><br><h1>Instruction List</h1><?php
             
             //Get rearrangement instructions with this solution ID//
             $postData = array(
