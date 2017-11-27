@@ -90,6 +90,7 @@
                 $time_reduction = $row['time_reduction'];
                 $distance_reduction = $row['distance_reduction'];
                 $created_at = $row['created_at'];
+                $reserveperc = $row['reserveperc'];
             }
         ?>
         
@@ -129,6 +130,7 @@
                             echo "<label>Created by: $u_name </label><br>";
                             echo "<label>Start capture date: $since </label><br>";
                             echo "<label>End capture date: $until  </label><br>";
+                            echo "<label>Reservation Percentage: $reserveperc% </label><br>";
                         ?>
                         </div>
                     </div>
