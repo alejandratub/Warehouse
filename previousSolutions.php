@@ -67,30 +67,18 @@
                 //Si se mando un solution_id en la funcion actualizar() se selecciona en el combobox
                 if($_POST['solutionValue']==$solution_id)
                 {
-                    //echo "ESCOGIDA " . $solution_id; 
+                    $defaultSolutionID = $_POST['solutionValue'];
                     $comboSolutions .=" <option value='".$solution_id."' selected=\"selected\">".$text."</option>";
                 }
-                //else
-                $comboSolutions .=" <option value='".$solution_id."'>".$text."</option>";
+                else
+                    $comboSolutions .=" <option value='".$solution_id."'>".$text."</option>";
             }
             
-            //Verifica si se recibio informacion a partir de seleccion de solucion del combobox//
-            if(isset($_POST['solutionValue']))
-            {
-                $infoData = array(
-                's' => 'solutionInfo',
-                'solution_id' => $_POST['solutionValue']
-                );
-            }
-            
-            //Si no se escogio alguna solucion por default se muestra la informacion de la última//
-            else
-            {
+            //Obtiene información de la solución seleccionada//
                 $infoData = array(
                 's' => 'solutionInfo',
                 'solution_id' => $defaultSolutionID
                 );
-            }
             
             $infoSolucion = editarperfil($infoData);
             foreach($infoSolucion as $row)
@@ -104,29 +92,66 @@
                 $created_at = $row['created_at'];
             }
         ?>
-            <br><br> <h1>Previous Solutions</h1>
-        <?php
-            echo "<label>Warehouse optimized: $wh_name </label><br>";
-            echo "<label>Solution created at: $created_at </label><br>";
-            echo "<label>Solution created by: $u_name </label><br>";
-            echo "<label>Start capture date: $since </label><br>";
-            echo "<label>End capture date: $until  </label><br>";
-            echo "<label>Time optimization: $time_reduction </label/><br>";
-            echo "<label>Distance optimization: $distance_reduction </label><br>";
-         ?>
+        
+        <div class='container'>
+            <!--form id= "sol_form" method="post"-->
+                <div class='row'>
+                    <div class='col-md-12 col-sm-12'>
+                        <h1>Previous Solutions</h1><br>
+                    </div>
+                </div>
+                
+                <div class='row text-center'>
+                    <div class='col-md-12 col-sm-12'>
+                        <div><label>Select the previous solution you would like to see:</label><br></div>
+                        <select id = "solution_id" name="solution_id" onchange="actualizar()"><?php echo $comboSolutions;?></select>
+                        <br><br>
+                    </div>
+                </div>
+                
+                <div class='row'>
+                    <div class='col-md-6 col-sm-6'>
+                        <div class='panel panel-primary'>
+                        <?php
+                            $timeF = number_format((float)$time_reduction, 2, '.', '');
+                            $distF = number_format((float)$distance_reduction, 2, '.', '');
+                            echo "<h2 class='text-center'>Optimization</h2><br>";
+                            echo "<h3>Time: $timeF% </h3><br>";
+                            echo "<h3>Distance: $distF%</h3><br>";
+                        ?>
+                        </div>
+                        
+                        <div class='panel panel-primary'>
+                        <?php
+                            echo "<h2 class='text-center'>General Information</h2><br>"; 
+                            echo "<label>Warehouse: $wh_name </label><br>";
+                            echo "<label>Created at: $created_at </label><br>";
+                            echo "<label>Created by: $u_name </label><br>";
+                            echo "<label>Start capture date: $since </label><br>";
+                            echo "<label>End capture date: $until  </label><br>";
+                        ?>
+                        </div>
+                    </div>
+                    <div class='col-md-6 col-sm-6'>
+                        <form action="arrangeInstructions.php" method="post">
+                            <?php
+                                echo "<input type=\"hidden\" name=\"solution_id\" value=$defaultSolutionID>" 
+                            ?>
+                            <div><button class="btn btn-default" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instruction List</button></div>
+                        </form>
+                        
+                        <form action="editmap.php" method="post">
+                            <?php
+                                echo "<input type=\"hidden\" name=\"solution_id\" value=$defaultSolutionID>" 
+                            ?>
+                            <div><button class="btn btn-default" value="Visual Instructions" type="seleccionar" name="inicial" >Map Instructions</button></div>
+                        </form>
+                        
+                    </div>
+                </form>
+            </div>
+            
 
-           <!--form action=" visualizarweb/html/warehouse.html" method="post"-->
-        <form id= "sol_form" method="post">
-            <!--div class="right-block"-->
-            <!--Get the dates where the solutions have been generated-->
-            <div><label>Select the previous solution you would like to see:</label><br><br></div>
-                    <select id = "solution_id" name="solution_id" onchange="actualizar()"><?php echo $comboSolutions;?></select>
-                    </select></div>
-            <!--/div-->
-            <div><button class="btn btn-primary" onclick="submitForm('arrangeInstructions.php')" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instructions</button></div>
-            <div><button class="btn btn-primary" onclick="submitForm('initialState.php')" value=" Estado Inicial" type="seleccionar" name="inicial" >Initial Warehouse State</button></div>
-            <div><button class="btn btn-primary" onclick="submitForm('finalState.php')" value=" Estado Final" type="seleccionar" name="seleccionar" >Final Warehouse State</button></div>
-        </form>
         
 </body>
 
@@ -148,26 +173,4 @@
       form.submit();
   }
 </script>
-
-
-<script>
-  function submitForm(action) 
-  {
-    var form = document.getElementById('sol_form');
-    form.setAttribute("method", "post");
-    form.action = action;
-    
-    var solutionSelected = document.getElementById("solution_id").value;
-    var solutionValue = document.createElement("input");
-    solutionValue.setAttribute("type", "hidden");
-    solutionValue.setAttribute("name", "solutionValue");
-    solutionValue.setAttribute("value", solutionSelected);
-    form.appendChild(solutionValue);
-    
-    document.body.appendChild(form);
-    form.submit();
-  }
-</script>
-
-
 </html>
