@@ -1,3 +1,15 @@
+<?php
+    session_start();
+    if(isset($_SESSION['Name']))
+        header("Location: home.php");
+    if (isset($_POST['submit']))
+    {
+        require('functions/sesion.php');
+        $usuario=$_POST["usuario"];
+        $contrasena=$_POST["contrasena"];
+        $existe=iniciarSesion($usuario,$contrasena);
+      }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -51,24 +63,6 @@
       </nav>
         <div class='centrar'>
             <div>
-                <?php
-            //require("navBar/navBarLogin.php");
-              //      navbar();
-                    session_start();
-                    if(isset($_SESSION['Name']))
-                        header("Location: home.php");
-
-
-                    if (isset($_POST['submit']))
-                    {
-
-                        require('functions/sesion.php');
-                        $usuario=$_POST["usuario"];
-                        $contrasena=$_POST["contrasena"];
-                        $existe=iniciarSesion($usuario,$contrasena);
-
-                      }
-                ?>
                 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
                 <form action="" method="post" >
                     <div class='centrar'>

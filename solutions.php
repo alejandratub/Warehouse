@@ -1,3 +1,10 @@
+<?php
+				session_start();
+				if(!isset($_SESSION['Name']))
+						header("Location: login.php");
+				require("navBar/navBar.php");
+				navbar();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,14 +42,6 @@
 		<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
  	</head>
 <body>
-		<?php
-            session_start();
-            if(!isset($_SESSION['Name']))
-                header("Location: login.php");
-            require("navBar/navBar.php");
-            navbar();
-         ?>
-
         <!--link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'-->
         <br><br> <h1>Solutions</h1>
 

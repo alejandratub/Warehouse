@@ -139,21 +139,21 @@
                     <div class='col-md-6 col-sm-6'>
                         <picture>
                         <?php
-                        
-                        //echo "<img src=\"images/warehousemap.png\" id=\"image\" width=$width height=$height style = \"position:absolute; top: $upMargin px; left: $leftMargin px\">";    
+
+                        //echo "<img src=\"images/warehousemap.png\" id=\"image\" width=$width height=$height style = \"position:absolute; top: $upMargin px; left: $leftMargin px\">";
                         //echo "<svg height='$height' width='$width' id='graph' style = \"position:absolute; top: $upMargin px; left: $leftMargin px\" >";
-                        
+
                         echo "<img src=\"images/warehousemap.png\" id=\"image\" width=$width height=$height>";
-                        
-                        echo "<svg height='$height' width='$width' id='graph'>";
-                        
-                        
+
+                        echo "<svg height='$height' width='$width' id='graph' style = \"position:absolute; top: -10; left: 10;\">";
+
+
                         $storageZoneCounter = 0;        //Zonas de almacenamiento tienen indices positivos
 
                         //Zona actualmente seleccionada//
                         //Por default se selecciona la primera//
-                        $zonaSeleccionada = $mapeoBeacons[0];  
-                        
+                        $zonaSeleccionada = $mapeoBeacons[0];
+
                         for ($j=0;$j<count($responseData);$j++)
                         {
                             $x1 = $responseData[$j]['initial_x'];
@@ -210,7 +210,7 @@
                             }
                         }
 
-                    ?>  
+                    ?>
 
                     <!--link rel="stylesheet" href="css/bootstrap.css"-->    </svg>
                         </picture>
@@ -220,7 +220,7 @@
                     </div>
                 </div>
             </div>
-        
+
 
         <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 

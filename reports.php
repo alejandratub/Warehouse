@@ -1,3 +1,44 @@
+<?php
+		session_start();
+		if(!isset($_SESSION['Name']))
+				header("Location: login.php");
+		require("navBar/navBar.php");
+		navbar();
+	require('functions/reportes.php');
+		$postProducts = array(
+				's' => 'listaProducto'
+			 );
+		$dataP =createReport($postProducts);
+
+		$select_class = "";
+		for ($i=0; $i<count($dataP); $i++)
+		{
+				$select_class .= "<option value=".$dataP[$i]['name'].">".$dataP[$i]['name']."</option>";
+		}
+
+
+ if(isset($_POST['generar']))
+	{
+		if (date('m-d-Y',strtotime($_POST['date1'])) > date('m-d-Y',strtotime($_POST['date2'])))
+		{
+			echo "<div class=\"infRojo\">Start date should be before the end date.</div>";
+
+		}
+		else
+		{
+			$postData = array(
+			'date1' => $_POST['date1'],
+			'date2' => $_POST['date2'],
+			'prod' => $_POST['prod'],
+			'dist' => $_POST['dist'],
+			'mont' => $_POST['mont'],
+			's' => 'g'
+			);
+			//echo "[".json_encode($postData)."]";
+		}
+	}
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -33,47 +74,7 @@
 	</head>
     <body>
     <div>
-        <?php
-            session_start();
-            if(!isset($_SESSION['Name']))
-                header("Location: login.php");
-            require("navBar/navBar.php");
-            navbar();
-          require('functions/reportes.php');
-						$postProducts = array(
-								's' => 'listaProducto'
-							 );
-						$dataP =createReport($postProducts);
 
-						$select_class = "";
-						for ($i=0; $i<count($dataP); $i++)
-						{
-						    $select_class .= "<option value=".$dataP[$i]['name'].">".$dataP[$i]['name']."</option>";
-						}
-
-
-         if(isset($_POST['generar']))
-          {
-						if (date('m-d-Y',strtotime($_POST['date1'])) > date('m-d-Y',strtotime($_POST['date2'])))
-						{
-							echo "<div class=\"infRojo\">Start date should be before the end date.</div>";
-
-						}
-						else
-						{
-							$postData = array(
-							'date1' => $_POST['date1'],
-							'date2' => $_POST['date2'],
-							'prod' => $_POST['prod'],
-							'dist' => $_POST['dist'],
-							'mont' => $_POST['mont'],
-							's' => 'g'
-							);
-							//echo "[".json_encode($postData)."]";
-						}
-          }
-
-        ?>
 	    <!--link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'-->
 			<div class="container">
               <form action="reportes.php" method="post">
@@ -81,7 +82,7 @@
                <h1>Create Report</h1>
 						 <!--/div-->
 
-							 		<<div class="right-block">
+							 		<div class="right-block">
 	               			<div><label>Start date:</label><br></div>
 	                    <div><input id="date"  name="date1" placeholder="dd-mm-yyyy" required></div>
 											<div><label>End date:</label><br></div>
