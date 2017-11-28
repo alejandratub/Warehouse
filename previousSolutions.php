@@ -142,7 +142,7 @@
                             <div><button class="btn btn-default" value=" Instrucciones" type="seleccionar" name="instrucciones" >Instruction List</button></div>
                         </form>
                         
-                        <form action="editmap.php" method="post">
+                        <form action="mapInstructions.php" method="post">
                             <?php
                                 echo "<input type=\"hidden\" name=\"solution_id\" value=$defaultSolutionID>" 
                             ?>

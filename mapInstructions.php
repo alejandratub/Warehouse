@@ -23,7 +23,6 @@ navbar();
   <body>
 
 
-
         <?php
 
         //SECTIONS DRAW//
@@ -38,27 +37,11 @@ navbar();
             )
         ));
 
-        //PRODUCTS PER SECTION//
-        //TODO es necesario obtener la información de los productos por seccion del momento
-        //en el que se genero la solucion y NO de este momento//
-        
-        $data2 = array('s' => 'prodXsection');
-        $json2 = json_encode($data2);
-        // Create the context for the request
-        $context2 = stream_context_create(array(
-            'http' => array(
-                'method' => 'POST',
-                'header' => "Content-Type: application/json\r\n",
-                'content' => "[".$json2."]"
-            )
-        ));
-
         // Send the request
         $response = file_get_contents('https://webservice-warehouse.run.aws-usw02-pr.ice.predix.io', FALSE, $context);
-        $response2 = file_get_contents('https://webservice-warehouse.run.aws-usw02-pr.ice.predix.io', FALSE, $context2);
 
         $solution_id = $_POST['solution_id'];
-
+                
         //Zona actualmente seleccionada//
         //Por default se selecciona la primera//
         if(is_numeric($_POST['zonaSeleccionada']))
@@ -85,124 +68,100 @@ navbar();
         {
             die('Error');
         }
-        if($response2 === FALSE)
-        {
-            die('Error');
-        }
-
-
-
+        
         $responseData = json_decode($response, TRUE);
-        $responseData2 = json_decode($response2, TRUE);
         $instructionsData = json_decode($instructionsInfo, TRUE);
 
+        
+        
         $rows=array();
         $floor = 0;
         $name = 0;
 
         $storageZoneCounter = 0;
-        $instCounter = 0;
         $defaultDestinationSelected = 0;        //Variable to determine if the default destination has been selected//
-
-        for($e=0;$e<count($responseData2);$e++)
+        
+        for($e=0;$e<count($instructionsData);$e++)
         {
-            $beacon = $responseData2[$e]['beacon_id'];          //Zona de beacon actual//
-            $piso = $responseData2[$e]['floor'];                //Piso actual//
-            $nombre = $responseData2[$e]['name'];                //Producto actual//
-            $section_id = $responseData2[$e]['id'];              //Zona actual (separadas por piso)//
-
+            $initialZ = $instructionsData[$e]['initial_zone'];          //Zona inicial//
+            $initialF = $instructionsData[$e]['initial_floor'];         //Piso inicial//         
+            $finalZ = $instructionsData[$e]['final_zone'];              //Zona final//
+            $finalF = $instructionsData[$e]['final_floor'];             //Piso final//   
+            $nombre = $instructionsData[$e]['name'];                       //Producto actual//
+            $completed = $instructionsData[$e]['completed'];            //Completez del paso actual
+            $step = $instructionsData[$e]['step'];                      //Numero de paso
+            
+            
             //Verifica si ya se agrego el piso para esta zona//
-            if(!isset($pisoAgregado[$beacon][$piso]))
+            if(!isset($pisoAgregado[$initialZ][$initialF]))
             {
                 //Termina la tabla de la ultima zona de beacons//
-                $infoZonas[$prevBeacon] = $infoZonas[$prevBeacon] . "</table>";
+                $infoZonas[$prevZone] = $infoZonas[$prevZone] . "</table>";
 
-                $pisoAgregado[$beacon][$piso]=1;
-                $infoZonas[$beacon]= $infoZonas[$beacon] . "<br><h3>" .  "Floor " . $piso . "</h3><br><br>";
+                $pisoAgregado[$initialZ][$initialF]=1;
+                $infoZonas[$initialZ]= $infoZonas[$initialZ] . "<br><h3>" .  "Floor " . $initialF . "</h3><br><br>";
 
                 //Crea Tabla y headings para elementos de este piso//
-                $infoZonas[$beacon]= $infoZonas[$beacon] .  "<table class=\"table-condensed\">
-                                                            <tr>
-                                                            <th>Product</th>
-                                                            <th>Move To</th>
-                                                            <th>Done</th>
-                                                            <th>View</th>
-                                                            </tr>";
+                $infoZonas[$initialZ]= $infoZonas[$initialZ] .  "<table class=\"table-condensed\">
+                                                                <tr>
+                                                                <th>Product</th>
+                                                                <th>Move To</th>
+                                                                <th>Done</th>
+                                                                <th>View</th>
+                                                                </tr>";
             }
 
             //Mapeo de zonas de beacons con indices//
-            if(!isset($beaconsAgregados[$beacon]))
+            if(!isset($beaconsAgregados[$initialZ]))
             {
-                $beaconsAgregados[$beacon] = 1;
-                $mapeoBeacons[$storageZoneCounter] = $beacon;
+                $beaconsAgregados[$initialZ] = 1;
+                $mapeoBeacons[$storageZoneCounter] = $initialZ;
 
                 //Selecciona la primera zona disponible por default si no se ha seleccionado todavia//
                 if(!isset($zonaSeleccionada) && $storageZoneCounter==0)
-                    $zonaSeleccionada=$beacon;
+                    $zonaSeleccionada=$initialZ;
 
                 $storageZoneCounter++;
             }
 
-            //Verifica si el producto agregado debe moverse a otra zona//
-            $seccionInicialInst = $instructionsData[$instCounter]['initial_section'];
-
             
-            if($seccionInicialInst==$section_id)
+            //Agrega información del producto, zona y piso de destino//
+
+            $infoZonas[$initialZ] = $infoZonas[$initialZ] . "<tr><td>" . $nombre . "</td>";
+            $infoZonas[$initialZ] = $infoZonas[$initialZ] . "<td>Z" . $finalZ ." - F" . $finalF . "</td>";
+
+            if($completed=='t')
             {
-                $destination = $instructionsData[$instCounter]['final_beacon'];
-
-                $infoZonas[$beacon] = $infoZonas[$beacon] . "<tr><td>" . $nombre . "</td>";
-                $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>Z" . $destination ." - F" . $instructionsData[$instCounter]['final_floor'] . "</td>";
-
-                $completed = $instructionsData[$instCounter]['completed'];
-                $step = $instructionsData[$instCounter]['step'];
-
-                if($completed=='t')
-                {
-                    $infoZonas[$beacon] = $infoZonas[$beacon] . "<td><input type=\"checkbox\" onclick=\"toggleStep($step , $solution_id)\" value = $completed checked
-                    name=$step></td>";
-                }
-                else
-                {
-                    $infoZonas[$beacon] = $infoZonas[$beacon] . "<td><input type=\"checkbox\" onclick=\"toggleStep($step , $solution_id)\" value = $completed
-                    name=$step></td>";
-                }
-
-                //Establece una zona de destino por default//
-                if(isset($_POST['destination']))
-                    $viewedDestination= $_POST['destination'];
-                else if($defaultDestinationSelected==0)
-                {
-                    $defaultDestinationSelected=1;
-                    $viewedDestination = $destination;
-                }
-
-                //Check the box corresponding to the destination zone currently viewed//
-                if($viewedDestination==$destination)
-                {
-                    $infoZonas[$beacon] = $infoZonas[$beacon] . "<td><input type=\"checkbox\" onclick=\"seleccionarLinea($zonaSeleccionada,$solution_id,$destination)\" checked></td>";
-                }
-                else
-                {
-                    $infoZonas[$beacon] = $infoZonas[$beacon] . "<td><input type=\"checkbox\" onclick=\"seleccionarLinea($zonaSeleccionada,$solution_id,$destination)\" ></td>";
-                }
-
-
-                $instCounter++;
+                $infoZonas[$initialZ] = $infoZonas[$initialZ] . "<td><input type=\"checkbox\" onclick=\"toggleStep($step , $solution_id)\" value = $completed checked
+                name=$step></td>";
             }
             else
             {
-                $infoZonas[$beacon] = $infoZonas[$beacon] . "<tr><td>" . $nombre . "</td>";
-                $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>" . "-" . "</td>";
-                $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>" . "-" . "</td>";
-                $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>" . "-" . "</td></tr>";
+                $infoZonas[$initialZ] = $infoZonas[$initialZ] . "<td><input type=\"checkbox\" onclick=\"toggleStep($step , $solution_id)\" value = $completed
+                name=$step></td>";
             }
 
-            //Obtiene el id del beacon anterior//
-            $prevBeacon = $beacon;
+            //Establece una zona de destino por default//
+            if(isset($_POST['destination']))
+                $viewedDestination= $_POST['destination'];
+            else if($defaultDestinationSelected==0)
+            {
+                $defaultDestinationSelected=1;
+                $viewedDestination = $finalZ;
+            }
+
+            //Check the box corresponding to the destination zone currently viewed//
+            if($viewedDestination==$finalZ)
+            {
+                $infoZonas[$initialZ] = $infoZonas[$initialZ] . "<td><input type=\"checkbox\" onclick=\"seleccionarLinea($zonaSeleccionada,$solution_id,$finalZ)\" checked></td>";
+            }
+            else
+            {
+                $infoZonas[$initialZ] = $infoZonas[$initialZ] . "<td><input type=\"checkbox\" onclick=\"seleccionarLinea($zonaSeleccionada,$solution_id,$finalZ)\" ></td>";
+            }
+            $prevZone = $initialZ;
         }
-
-
+        
         $xMax = 0;
         $yMax = 0;
         $xMin = $responseData[0]['initial_x'];
@@ -384,8 +343,8 @@ navbar();
                                             <line x1="0" y1 ="49" x2 ="70" y2="49" style="stroke:rgb(192,0,192);stroke-width:4"/>
                                             <line x1="0" y1 ="88" x2 ="70" y2="88" style="stroke:rgb(255,0,0);stroke-width:4"/>
                                             <line x1="0" y1 ="127" x2 ="70" y2="127" style="stroke:rgb(255,165,0);stroke-width:4"/>
-                                            <line x1="0" y1 ="166" x2 ="70" y2="166" style="stroke:rgb(0,0,255);stroke-width:4"/>
-                                            <line x1="0" y1 ="205" x2 ="70" y2="205" style="stroke:rgb(100,100,100);stroke-width:4"/>
+                                            <line x1="0" y1 ="183" x2 ="70" y2="183" style="stroke:rgb(0,0,255);stroke-width:4"/>
+                                            <line x1="0" y1 ="222" x2 ="70" y2="222" style="stroke:rgb(100,100,100);stroke-width:4"/>
                                         </svg>
                                     </div>
                                     <div class = 'col-md-10 col-sm-10 text-left'>
@@ -393,9 +352,9 @@ navbar();
                                         <br>
                                         <h4>Selected Final Zone</h4>
                                         <br>
-                                        <h4>Storage zone with product</h4>
+                                        <h4>Storage zone with pending rearrangements</h4>
                                         <br>
-                                        <h4>Storage zone without product</h4>
+                                        <h4>Storage zone without pending rearrangements</h4>
                                         <br>
                                         <h4>Highly frequented zone</h4>
                                         <br>
@@ -422,7 +381,7 @@ navbar();
             {
                 var form = document.createElement("form");
                 form.setAttribute("method", "post");
-                form.setAttribute("action", "editmap.php");
+                form.setAttribute("action", "mapInstructions.php");
 
                 var zona = document.createElement('input');
                 zona.setAttribute("type", 'hidden');

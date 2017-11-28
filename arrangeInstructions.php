@@ -70,8 +70,10 @@
                         <th>Step</th>
                         <th>Ean</th>
                         <th>Name</th>
-                        <th>Initial Section</th>
-                        <th>Final Section</th>
+                        <th>Initial Zone</th>
+                        <th>Initial Floor</th>
+                        <th>Final Zone</th>
+                        <th>Final Floor</th>
                         <th>Completed</th>
                         </tr>";
                         
@@ -83,8 +85,10 @@
                             echo "<td>" . $row['step'] . "</td>";
                             echo "<td>" . $row['ean'] . "</td>";
                             echo "<td>" . $row['name'] . "</td>";
-                            echo "<td>" . $row['initial_section'] . "</td>";
-                            echo "<td>" . $row['final_section'] . "</td>";
+                            echo "<td>" . $row['initial_zone'] . "</td>";
+                            echo "<td>" . $row['initial_floor'] . "</td>";
+                            echo "<td>" . $row['final_zone'] . "</td>";
+                            echo "<td>" . $row['final_floor'] . "</td>";
                             
                             if($completed=='t')
                                 echo "<td><input type=\"checkbox\" onclick=\"toggleStep(".$row['step'].", $solution_id)\" value = $completed checked name=\"".$row['step']."\" ></div></td>";
