@@ -19,7 +19,8 @@ function runAlgorithm($dataAnalytic)
 
   //ANALYTIC EXECUTION//
   $curlAnalytic = curl_init();
-  $urlAnalytic = 'https://predix-analytics-catalog-release.run.aws-usw02-pr.ice.predix.io/api/v1/catalog/analytics/af48cd0c-4e91-4c7c-b7c4-44ea881cddcb/execution';
+  $urlAnalytic = 'https://predix-analytics-catalog-release.run.aws-usw02-pr.ice.predix.io/api/v1/catalog/analytics/6c2d348a-3e57-456d-9fbc-b3e5d9c16461/execution';
+  
   $headerAnalytic = array('Predix-Zone-Id: 14ec97b3-4b0f-4f94-adf5-4b893e5a88da' , 'content-type: application/json', 'authorization: Bearer ' . $access_token, 'content-type: application/json');
 
   curl_setopt($curlAnalytic, CURLOPT_POST, 1);

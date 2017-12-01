@@ -42,8 +42,11 @@
 						require("functions/algorithm.php");
             navbar();
 						$id_cuenta=$_SESSION['id_cuenta'];
-						$emails = array(
+						/*$emails = array(
 							'1' => $id_cuenta
+						);*/
+						$emails = array(
+							'1' => 'legl_1995@hotmail.com'
 						);
 						json_encode($emails);
 
@@ -57,18 +60,23 @@
 					 }
 					 else
 					 {
+                        $reservePercent = $_POST['reservePercent'];
+                        if($reservePercent>100)
+                            $reservePercent=100;
+                        else if($reservePercent<0)
+                            $reservePercent=0;
+                        
+                        //Falta obtener user_id de bd//
 						 $data = array(
-						 'hours' => $_POST['hours'],
-						 'minutes' => $_POST['minutes'],
-						 'seconds' => $_POST['seconds'],
-						 'date1' => $_POST['date1'],
-						 'date2' => $_POST['date2'],
-						 
+						 'startDate' => $_POST['date1'],
+						 'endDate' => $_POST['date2'],
+						 'reservePercent' => $reservePercent,
+						 'user_id' => '1',
 						 'emails' => $emails
-
 						 );
 						 $dataAnalytic = json_encode($data);
-						//echo "<div class=\"infVerde\">Your request has been made.</div>";
+						 
+						echo "<div class=\"infVerde\">Your request has been made.</div>";
 							//echo "[".$dataAnalytic."]";
 					//	set_time_limit(0);
 						runAlgorithm($dataAnalytic);
@@ -80,28 +88,48 @@
 
 
          ?>
-				 <div class="container">
-           <form action="createSolution.php" method="post">
-              <br><br>
-							<div class="col-sm-12 col-mid-12 col-lg-12 ">
-								<br><br> <h1>Create Solution</h1>
-								</div>
- 							<div class="col-sm-8  col-md-7 col-lg-5 left-block">
-								<div><label>Data recovery:</label><br></div>
-							<div><label>Start Date:</label><br></div>
-		         	<div><input id="date"  name="date1" placeholder="dd-mm-yyyy" required></div>
-							<div><label>End date:</label><br></div>
-		          <div><input id="date" name="date2" placeholder="dd-mm-yyyy" required></div>
+            <div class="container">
+                <form action="createSolution.php" method="post">
+                <br><br>
+                    <div class='row'>
+                        <div class="col-sm-12 col-mid-12 col-lg-12 ">
+                            <br><br> <h1>Create Solution</h1>
+                        </div>
+                    </div>
+                    
+                    <div class='row'>
+                        <div class="col-md-5 left-block">
+                            <div><label>Data recovery:</label><br></div>
+                            <div><label>Start Date:</label><br></div>
+                            <div><input id="date"  name="date1" placeholder="dd-mm-yyyy" required></div>
+                            <div><label>End date:</label><br></div>
+                            <div><input id="date" name="date2" placeholder="dd-mm-yyyy" required></div>
+                            <div><label>Parameters:</label><br></div>
+                            <div><label>Reservation Percentage:</label><br></div>
+                            <div><input id="time" type="float" name="reservePercent" placeholder="%"required></div>
+                        </div>
+						
+						<div class="col-md-2">
 						</div>
-						<div class="col-sm-8 col-md-7 col-lg-5 left-block">
-						<div><label>Execution time:</label><br></div>
-							<div><label>Hours:</label><br></div>
-							<div><input id="time" type="int" name="hours" placeholder="hours"required></div>
-							<div><label>Minutes:</label><br></div>
-							<div><input id="time" type="int" name="minutes" placeholder="minutes"required></div>
-							<div><label>Seconds:</label><br></div>
-							<div><input id="time" type="int" name="seconds" placeholder="seconds"required></div>
-		      </div>
+						
+						<div class="col-md-5">
+                            <br>
+                            <div class="panel panel-info">
+                                <div class="panel-body">
+                                                        The reservation percentage parameter allows you to decide how much of your 
+                                                        available space would you like to reserve for incoming product.
+                                                        <br><br>
+                                                        A high value for this parameter (> 70%) means that you expect a considerable amount
+                                                        of frequent moving product for the next period, by setting this parameter high you are making
+                                                        sure that these frequently moving incoming products will have a good spot in the warehouse
+                                                        available at their arrival.
+                                                        <br><br>
+                                                        For deciding the value of this parameter you should take into account that lower reservation
+                                                        percentages may be riskier, but are able to yield higher optimization percentages.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 							<div class="col-sm-12 col-mid-8 col-lg-8 ">
 								<div><button class=" button hvr-ripple-in" value=" generar" type="generar" name="generar">Create Solution</button></div>
 							</div>
