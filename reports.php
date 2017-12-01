@@ -64,9 +64,6 @@
 							$postData = array(
 							'date1' => $_POST['date1'],
 							'date2' => $_POST['date2'],
-							'prod' => $_POST['prod'],
-							'dist' => $_POST['dist'],
-							'mont' => $_POST['mont'],
 							's' => 'g'
 							);
 							//echo "[".json_encode($postData)."]";
@@ -76,7 +73,7 @@
         ?>
 	    <!--link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'-->
 			<div class="container">
-              <form action="reportes.php" method="post">
+              <form action="reports_graph.php" method="post">
 
                <h1>Create Report</h1>
 						 <!--/div-->
@@ -95,7 +92,7 @@
 										</div>
 </div>
 										<!--div class="col-sm-12 col-mid-12 col-lg-12 "-->
-                <div><button class="button hvr-ripple-in" value="generar" type="generar" name="generar">Create Report</button></div>
+                <div><button class="button hvr-ripple-in" href = "reports_graph.php" value="generar" type="generar" name="generar">Create Report</button></div>
             </form>
         </div>
      </body>

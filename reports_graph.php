@@ -66,10 +66,10 @@
           					<nav class="menu-hover-effect menu-hover-effect-4">
           						<ul class="nav navbar-nav">
 
-                     <li><a href="#section1" class="hvr-ripple-in" styl="center-block">Product's time</a></li>
-										 <li><a href="#section2" class="hvr-ripple-in" styl="center-block">Product's movements</a></li>
-										 <li><a href="#section3" class="hvr-ripple-in" styl="center-block">Lift-truck's time</a></li>
-										 <li><a href="#section4" class="hvr-ripple-in" styl="center-block">Lift-truck's movements</a></li>
+                     <li><a href="#section1" class="hvr-ripple-in" styl="center-block">Products' time</a></li>
+										 <li><a href="#section2" class="hvr-ripple-in" styl="center-block">Products' movements</a></li>
+										 <li><a href="#section3" class="hvr-ripple-in" styl="center-block">Lift-trucks' time</a></li>
+										 <li><a href="#section4" class="hvr-ripple-in" styl="center-block">Lift-trucks' movements</a></li>
 
 
                     </ul>
@@ -126,102 +126,16 @@
 				//var_dump($Ptimes);
 
 				//product's time chart
-			echo '
-				<script>
+			?>
 
 
 
-function addLoadEvent(func) {
-  var oldonload = window.onload;
-  if (typeof window.onload != "unction") {
-    window.onload = func;
-  } else {
-    window.onload = function() {
-      if (oldonload) {
-        oldonload();
-      }
-      func();
-    }
-  }
-}
-addLoadEvent(func1);
-addLoadEvent(func2);
-addLoadEvent(func3);
-addLoadEvent(function() {
-    document.body.style.backgroundColor = "#EFDF95";
-})
 
-				/*window.onload = start();
-				function start () {
-					function 1();
-					function 2();
-					function 3();
-				};*/
-				function func1(){
-					var chart1 = new CanvasJS.Chart("Ptime", {
-						animationEnabled: true,
-						exportEnabled: true,
-						theme: "light1", // "light1", "light2", "dark1", "dark2"
-						title:{
-							text: "Top 20 products based on time"
-						},
-						data: [{
-							type: "bar", //change type to bar, line, area, pie, etc
-							indexLabelFontColor: "#ffffff",
-							indexLabelPlacement: "outside",
-							dataPoints: '.$Pmovements.'
-						}]
-					});
-					chart.render();
-				}
-
-
-				fuction func2(){
-					var chart2 = new CanvasJS.Chart("Pmovement", {
-						animationEnabled: true,
-						exportEnabled: true,
-						theme: "light1", // "light1", "light2", "dark1", "dark2"
-						title:{
-							text: "Top 20 moved products"
-						},
-						data: [{
-							type: "bar", //change type to bar, line, area, pie, etc
-							indexLabelFontColor: "#ffffff",
-							indexLabelPlacement: "outside",
-							dataPoints: '.$Pmovements.'
-						}]
-					});
-					chart.render();
-				}
-
-
-				function func3(){
-					var chart3 = new CanvasJS.Chart("lt_time", {
-						animationEnabled: true,
-						exportEnabled: true,
-						theme: "light1", // "light1", "light2", "dark1", "dark2"
-						title:{
-							text: "Top 20 products based on time"
-						},
-						data: [{
-							type: "bar", //change type to bar, line, area, pie, etc
-							indexLabelFontColor: "#ffffff",
-							indexLabelPlacement: "outside",
-							dataPoints: '.$lt_times.'
-						}]
-					});
-					chart.render();
-				}
-
-								</script>';
-
-
-		?>
 
 		<!-- Section 1 -->
 		<div id="section1">
 		<div class="center-block">
-				<h1>Product's time</h1>
+				<h1>Products' time</h1>
 				<div id="Ptime" style="height: 500px; width: 100%;"></div><br><br><br><br>
 		 </div>
 	 </div>
@@ -230,7 +144,7 @@ addLoadEvent(function() {
 		<!-- Section 2 -->
 		<div id="section2">
 		<div class="center-block">
-						<h1>Product's movements</h1>
+						<h1>Products' movements</h1>
 					<div id="Pmovement" style="height: 500px; width: 100%;"></div>
 		</div>
 	</div>
@@ -238,9 +152,16 @@ addLoadEvent(function() {
 	<!-- Section 3 -->
 	<div id="section3">
 	<div class="center-block">
-			<h1>Lift-truck's time</h1>
+			<h1>Lift-trucks' time</h1>
 			<div id="lt_time" style="height: 500px; width: 100%;"></div><br><br><br><br>
 	 </div>
+ </div>
+ <!-- Section 4 -->
+ <div id="section4">
+ <div class="center-block">
+		 <h1>Lift-trucks' movements</h1>
+		 <div id="lt_movements" style="height: 500px; width: 100%;"></div><br><br><br><br>
+	</div>
  </div>
 
      </form>
@@ -249,5 +170,88 @@ addLoadEvent(function() {
 
 					</div>
 				</div>
+
+									<script>
+
+									function func1(){
+										var chart1 = new CanvasJS.Chart("Ptime", {
+											animationEnabled: true,
+											exportEnabled: true,
+											theme: "light1", // "light1", "light2", "dark1", "dark2"
+											title:{
+												text: "Top 20 products based on time"
+											},
+											data: [{
+												type: "bar", //change type to bar, line, area, pie, etc
+												indexLabelFontColor: "#ffffff",
+												indexLabelPlacement: "outside",
+												dataPoints: <?php echo $Ptimes; ?>
+											}]
+										});
+										chart1.render();
+									}
+
+
+									function func2(){
+										var chart2 = new CanvasJS.Chart("Pmovement", {
+											animationEnabled: true,
+											exportEnabled: true,
+											theme: "light1", // "light1", "light2", "dark1", "dark2"
+											title:{
+												text: "Top 20 moved products"
+											},
+											data: [{
+												type: "bar", //change type to bar, line, area, pie, etc
+												indexLabelFontColor: "#ffffff",
+												indexLabelPlacement: "outside",
+												dataPoints: <?php echo $Pmovements; ?>
+											}]
+										});
+										chart2.render();
+									}
+
+									function func3(){
+										var chart3 = new CanvasJS.Chart("lt_time", {
+											animationEnabled: true,
+											exportEnabled: true,
+											theme: "light1", // "light1", "light2", "dark1", "dark2"
+											title:{
+												text: "Lift-trucks' time"
+											},
+											data: [{
+												type: "bar", //change type to bar, line, area, pie, etc
+												indexLabelFontColor: "#ffffff",
+												indexLabelPlacement: "outside",
+												dataPoints:  <?php echo $lt_times; ?>
+											}]
+										});
+										chart3.render();
+									}
+
+									function func4(){
+										var chart4 = new CanvasJS.Chart("lt_movements", {
+											animationEnabled: true,
+											exportEnabled: true,
+											theme: "light1", // "light1", "light2", "dark1", "dark2"
+											title:{
+												text: "Lift-trucks' movements"
+											},
+											data: [{
+												type: "bar", //change type to bar, line, area, pie, etc
+												indexLabelFontColor: "#ffffff",
+												indexLabelPlacement: "outside",
+												dataPoints:  <?php echo $lt_movements; ?>
+											}]
+										});
+										chart4.render();
+									}
+
+									func1();
+									func2();
+									func3();
+									func4();
+
+								</script>
+
      </body>
 </html>
