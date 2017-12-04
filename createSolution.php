@@ -47,12 +47,12 @@
             navbar();
 					//user information
 						$id_cuenta=$_SESSION['id_cuenta'];
-						/*$emails = array(
-							'1' => $id_cuenta
-						);*/
 						$emails = array(
-							'1' => 'legl_1995@hotmail.com'
+							'1' => $id_cuenta
 						);
+						/*$emails = array(
+							'1' => 'legl_1995@hotmail.com'
+						);*/
 						json_encode($emails);
 
 				if(isset($_POST['generar']))
