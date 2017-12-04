@@ -14,7 +14,7 @@
   <!--Loads CSS styles, logo and window name -->
 		<meta charset ="UTF-8">
 		<link rel="stylesheet" href="css/styleEditar.css" type="text/css" media="all" />
-		<title>Inicio</title>
+		<title>Home</title>
 		 <link rel="shortcut icon" type="image/png" href="images/w.png"/><!-- custom-theme -->
  		<link rel="shortcut icon" type="image/png" href="images/w.png"/>
  		<!-- custom-theme -->

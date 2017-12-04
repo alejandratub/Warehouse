@@ -25,10 +25,26 @@
 		{
 			//post the dates selected
 			$postData = array(
-				's' => 'lt_movements',
 			'date1' => $_POST['date1'],
-			'date2' => $_POST['date2']
+			'date2' => $_POST['date2'],
+			's' => 'lt_movements'
 			);
+			$postData = array(
+			'date1' => $_POST['date1'],
+			'date2' => $_POST['date2'],
+			's' => 'lt_times'
+			);
+			$postData = array(
+			'date1' => $_POST['date1'],
+			'date2' => $_POST['date2'],
+			's' => 'movements'
+			);
+			$postData = array(
+			'date1' => $_POST['date1'],
+			'date2' => $_POST['date2'],
+			's' => 'times'
+			);
+
 		}
 	}
 
