@@ -1,7 +1,40 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<!--Loads CSS styles, logo and window name -->
+ <meta charset ="UTF-8">
+ <link rel="stylesheet" href="css/stylereportes.css" type="text/css" media="all" />
+ <title>Reports</title>
+ <link rel="shortcut icon" type="image/png" href="images/w.png"/>
+ <!-- custom-theme -->
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="keywords" content="Deft Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+ <script type="application/x-javascript">
+	 addEventListener("load", function () {
+		 setTimeout(hideURLbar, 0);
+	 }, false);
+
+	 function hideURLbar() {
+		 window.scrollTo(0, 1);
+	 }
+ </script>
+ <!-- //custom-theme -->
+ <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+ <!-- Owl-carousel-CSS -->
+ <link href="css/owl.carousel.css" rel="stylesheet">
+ <link href="css/styleT.css" rel="stylesheet" type="text/css" media="all" />
+ <!-- font-awesome-icons -->
+ <link href="css/font-awesome.css" rel="stylesheet"/>
+ <!-- //font-awesome-icons -->
+ <link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
+		 rel="stylesheet"/>
+ <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet"/>
+ <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</head>
 	    <body>
-    <div>
         <?php
 				//User session management
             session_start();
@@ -98,7 +131,7 @@
 		<div class="center-block">
 						<h1>Products' movements</h1>
 						<!-- function to call Products' movements graph -->
-					<div id="Pmovement" style="height: 500px; width: 100%;"></div>
+					<div id="Pmovement" style="height: 500px; width: 100%;"></div><br><br><br><br>
 		</div>
 	</div>
 
@@ -122,7 +155,6 @@
 
      </form>
 					</div>
-				</div>
 		<script>
 				//Draw Products' time graph
 									function func1(){
@@ -207,38 +239,7 @@
 								</script>
 
      </body>
-		 <head>
-	 		 <!--Loads CSS styles, logo and window name -->
-	 		<meta charset ="UTF-8">
-	 		<link rel="stylesheet" href="css/stylereportes.css" type="text/css" media="all" />
-	 		<title>Reports</title>
-	 		<link rel="shortcut icon" type="image/png" href="images/w.png"/>
-	 		<!-- custom-theme -->
-	 		<meta name="viewport" content="width=device-width, initial-scale=1">
-	 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	 		<meta name="keywords" content="Deft Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-	 	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-	 		<script type="application/x-javascript">
-	 			addEventListener("load", function () {
-	 				setTimeout(hideURLbar, 0);
-	 			}, false);
 
-	 			function hideURLbar() {
-	 				window.scrollTo(0, 1);
-	 			}
-	 		</script>
-	 		<!-- //custom-theme -->
-	 		<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-	 		<!-- Owl-carousel-CSS -->
-	 		<link href="css/owl.carousel.css" rel="stylesheet">
-	 		<link href="css/styleT.css" rel="stylesheet" type="text/css" media="all" />
-	 		<!-- font-awesome-icons -->
-	 		<link href="css/font-awesome.css" rel="stylesheet"/>
-	 		<!-- //font-awesome-icons -->
-	 		<link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
-	 				rel="stylesheet"/>
-	 		<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet"/>
-	 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-	 	</head>
+		<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 </html>

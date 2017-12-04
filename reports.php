@@ -25,9 +25,9 @@
 		{
 			//post the dates selected
 			$postData = array(
+				's' => 'lt_movements',
 			'date1' => $_POST['date1'],
-			'date2' => $_POST['date2'],
-			's' => 'g'
+			'date2' => $_POST['date2']
 			);
 		}
 	}
