@@ -1,13 +1,17 @@
+
 <?php
+// User session management
             session_start();
             if(!isset($_SESSION['Name']))
                 header("Location: login.php");
+//navbar load
             require("navBar/navBar.php");
             navbar();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+  <!--Loads CSS styles, logo and window name -->
 		<meta charset ="UTF-8">
 		<link rel="stylesheet" href="css/styleEditar.css" type="text/css" media="all" />
 		<title>Inicio</title>
@@ -40,9 +44,31 @@
  		    rel="stylesheet">
  		<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
   	</head>
+
 <body>
+          <!-- Warehouse Logo-->
           <div class='centrar'>
-          <img src="images/current-logo-3.png" alt="logo" width=300px height=150px text-align=center>
+          <img src="images/w.png" alt="logo" width=200px height=200px text-align=center>
+          <!-- Brief description of all sections inside the webapp-->
+          <div class = "row">
+            <div class ="col">
+            <h3>Reports</h3><br>
+            <p>In the report section, you will find the most moved and the most time consuming products inside the warehouse, <br>
+              as well as the times spent and movements of the Lift Trucks based on the selected dates.</p>
+            </div>
+            <div class = "col">
+              <h3>Solutions</h3><br>
+              <p>In the solution sectrion, you will find two modules, in the first one, you will be able to visualize solutions created in the past, <br>
+              and in the second one you will be able to select the dates based on which the solution will be created.</p>
+            </div>
+            <div class = "col">
+              <h3>Profile</h3><br>
+              <p>In the profile section, you will find all the information, based on which the KPI's will be calculated.</p>
+            </div>
           </div>
+          <div class="row">
+            <h3></h3>
+          </div>
+              </div>
 </body>
 </html>

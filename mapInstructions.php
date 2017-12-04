@@ -1,28 +1,17 @@
 <?php
+//user session management
 session_start();
 if(!isset($_SESSION['Name']))
     header("Location: login.php");
+//loads navbar
 require("navBar/navBar.php");
+//function to get and post all the information needed
 require('functions/editar.php');
 navbar();
 ?>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="css/owl.carousel.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/team.css" type="text/css" media="all" />
-    <link href="css/styleT.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="css/font-awesome.css" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
-
-  </head>
-  <body>
-
-
+    <body>
         <?php
 
         //SECTIONS DRAW//
@@ -41,7 +30,7 @@ navbar();
         $response = file_get_contents('https://webservice-warehouse.run.aws-usw02-pr.ice.predix.io', FALSE, $context);
 
         $solution_id = $_POST['solution_id'];
-                
+
         //Zona actualmente seleccionada//
         //Por default se selecciona la primera//
         if(is_numeric($_POST['zonaSeleccionada']))
@@ -68,30 +57,30 @@ navbar();
         {
             die('Error');
         }
-        
+
         $responseData = json_decode($response, TRUE);
         $instructionsData = json_decode($instructionsInfo, TRUE);
 
-        
-        
+
+
         $rows=array();
         $floor = 0;
         $name = 0;
 
         $storageZoneCounter = 0;
         $defaultDestinationSelected = 0;        //Variable to determine if the default destination has been selected//
-        
+
         for($e=0;$e<count($instructionsData);$e++)
         {
             $initialZ = $instructionsData[$e]['initial_zone'];          //Zona inicial//
-            $initialF = $instructionsData[$e]['initial_floor'];         //Piso inicial//         
+            $initialF = $instructionsData[$e]['initial_floor'];         //Piso inicial//
             $finalZ = $instructionsData[$e]['final_zone'];              //Zona final//
-            $finalF = $instructionsData[$e]['final_floor'];             //Piso final//   
+            $finalF = $instructionsData[$e]['final_floor'];             //Piso final//
             $nombre = $instructionsData[$e]['name'];                       //Producto actual//
             $completed = $instructionsData[$e]['completed'];            //Completez del paso actual
             $step = $instructionsData[$e]['step'];                      //Numero de paso
-            
-            
+
+
             //Verifica si ya se agrego el piso para esta zona//
             if(!isset($pisoAgregado[$initialZ][$initialF]))
             {
@@ -124,7 +113,7 @@ navbar();
                 $storageZoneCounter++;
             }
 
-            
+
             //Agrega información del producto, zona y piso de destino//
 
             $infoZonas[$initialZ] = $infoZonas[$initialZ] . "<tr><td>" . $nombre . "</td>";
@@ -161,7 +150,7 @@ navbar();
             }
             $prevZone = $initialZ;
         }
-        
+
         $xMax = 0;
         $yMax = 0;
         $xMin = $responseData[0]['initial_x'];
@@ -427,4 +416,17 @@ navbar();
             }
         </script>
     </body>
+    <head>
+      <!--Loads CSS styles, logo and window name -->
+      <meta charset="utf-8">
+      <title></title>
+      <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+      <link href="css/owl.carousel.css" rel="stylesheet">
+      <link rel="stylesheet" href="css/team.css" type="text/css" media="all" />
+      <link href="css/styleT.css" rel="stylesheet" type="text/css" media="all" />
+      <link href="css/font-awesome.css" rel="stylesheet">
+      <link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800" rel="stylesheet">
+      <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+
+    </head>
 </html>

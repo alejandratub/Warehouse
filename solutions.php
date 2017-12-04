@@ -1,43 +1,17 @@
 <?php
+// User session management
 				session_start();
 				if(!isset($_SESSION['Name']))
 						header("Location: login.php");
+//navbar load
 				require("navBar/navBar.php");
 				navbar();
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset ="UTF-8">
-            <link rel="stylesheet" href="css/styleSoluciones.css" type="text/css" media="all" />
 
-            <title>Solutions</title>
-            <link rel="shortcut icon" type="image/png" href="images/w.png"/>
-            <link rel="shortcut icon" type="image/png" href="images/w.png"/>
-
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <meta name="keywords" content="Deft Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-        Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-            <script type="application/x-javascript">
-                addEventListener("load", function () {
-                    setTimeout(hideURLbar, 0);
-                }, false);
-
-                function hideURLbar() {
-                    window.scrollTo(0, 1);
-                }
-            </script>
-            <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-            <link href="css/owl.carousel.css" rel="stylesheet">
-            <link rel="stylesheet" href="css/team.css" type="text/css" media="all" />
-            <link href="css/styleT.css" rel="stylesheet" type="text/css" media="all" />
-            <link href="css/font-awesome.css" rel="stylesheet">
-            <link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
-                rel="stylesheet">
-            <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
- 	</head>
-<body>   
+<body>
+	<!-- Two buttons for the two different views of solutions -->
          <br><br> <h1>Solutions</h1><br><br>
          <div class='container'>
              <div class='row center-block center-button text-center'>
@@ -50,6 +24,36 @@
          </div>
 
 
-
 </body>
+<head>
+	 <!--Loads CSS styles, logo and window name -->
+		<meta charset ="UTF-8">
+				<link rel="stylesheet" href="css/styleSoluciones.css" type="text/css" media="all" />
+
+				<title>Solutions</title>
+				<link rel="shortcut icon" type="image/png" href="images/w.png"/>
+				<link rel="shortcut icon" type="image/png" href="images/w.png"/>
+
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+				<meta name="keywords" content="Deft Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+		Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+				<script type="application/x-javascript">
+						addEventListener("load", function () {
+								setTimeout(hideURLbar, 0);
+						}, false);
+
+						function hideURLbar() {
+								window.scrollTo(0, 1);
+						}
+				</script>
+				<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+				<link href="css/owl.carousel.css" rel="stylesheet">
+				<link rel="stylesheet" href="css/team.css" type="text/css" media="all" />
+				<link href="css/styleT.css" rel="stylesheet" type="text/css" media="all" />
+				<link href="css/font-awesome.css" rel="stylesheet">
+				<link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
+						rel="stylesheet">
+				<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+</head>
 </html>

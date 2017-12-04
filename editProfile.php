@@ -1,10 +1,14 @@
 <?php
+//User session management
 session_start();
 if(!isset($_SESSION['Name']))
 		header("Location: login.php");
+	//load navbar
 		require("navBar/navBar.php");
 		navbar();
+		//loads function to get all profile information
 		require('functions/editar.php');
+		//gets user id
 		$id_cuenta=$_SESSION['id_cuenta'];
 
 		$postPerfil = array(
@@ -12,7 +16,7 @@ if(!isset($_SESSION['Name']))
 				's' => 'getProfile'
 			 );
 		$data =editarperfil($postPerfil);
-
+//all profile information
 		$mont=$data['no_lt'];
 		$costoMont=$data['energy_costs'];
 		$tipo=$data['transport_type'];
@@ -22,6 +26,7 @@ if(!isset($_SESSION['Name']))
 
 		if(isset($_POST['generar']))
 			{
+				//when the number of liftrucks is modified a post is made
 				if($_POST["mont"]!=null)
 				{
 					$postData = array(
@@ -32,6 +37,7 @@ if(!isset($_SESSION['Name']))
 
 						 editarperfil($postData);
 				}
+				//when the energy cost of liftrucks is modified a post is made
 				if($_POST["costoMont"]!=null)
 				{
 					$postData = array(
@@ -41,6 +47,7 @@ if(!isset($_SESSION['Name']))
 						 );
 						 editarperfil($postData);
 				}
+				//when the type of liftrucks is modified a post is made
 				if($_POST["tipo"]!=null)
 				{
 					$postData = array(
@@ -50,6 +57,7 @@ if(!isset($_SESSION['Name']))
 						 );
 						 editarperfil($postData);
 				}
+				//when the employee cost is modified a post is made
 				if($_POST["costohora"]!=null)
 				{
 					$postData = array(
@@ -59,6 +67,7 @@ if(!isset($_SESSION['Name']))
 						 );
 						 editarperfil($postData);
 				}
+				//when the mantainance cost is modified a post is made
 				if($_POST["mant"]!=null)
 				{
 					$postData = array(
@@ -67,7 +76,9 @@ if(!isset($_SESSION['Name']))
 							's' => 'maintaince'
 						 );
 						 editarperfil($postData);
-				}if($_POST["frecMant"]!=null)
+				}
+				//when the maintainance frequency is modified a post is made
+				if($_POST["frecMant"]!=null)
 				{
 					$postData = array(
 						'user' => $id_cuenta,
@@ -78,6 +89,7 @@ if(!isset($_SESSION['Name']))
 				}
 					header("Location: profile.php");
 		}
+		// To post the image
 		if(isset($_POST['enviar']))
 		{
 			$imagen = $_REQUEST['imagen'];
@@ -101,7 +113,7 @@ if(!isset($_SESSION['Name']))
       // El archivo introducido no se ha podido subir
          else
          {
-            $errores = $errores . "<LI>No se ha podido subir el archivo\n";
+            $errores = $errores . "<LI>Image could not be uploaded\n";
             $nombreArchivo = '';
          }
 
@@ -124,46 +136,51 @@ if(!isset($_SESSION['Name']))
 			print ("<A TARGET='_blank' HREF='" . $nombreDirectorio . $nombreArchivo . "'>" . $nombreArchivo . "</A>");
 			print ("<IMG SRC=\"$nombreDirectorio$nombreArchivo\">");
 		}
+?>
 
 
-			echo
-			'<div class ="container">
+<!-- HTML part to be visualized by the user -->
+			<div class ="container">
 			<form action="editProfile.php" method="post">
 			<br><br>
 			 <h1>Edit Profile</h1><br><br>
-
-			 <div class="col-md-4 center-block">
-			 <div><label>Number of transport elements:</label><br></div>
-				 <div><input id="mont"  placeholder="'.$mont.'"name="mont"></div>
-				 <div><br><label>Energy cost of transport:</label><br></div>
-				 <div><input id="costoMont" placeholder="'.$costoMont.'" name="costoMont"></div>
-			 <div>
-				 <div><br><label>Type of transport:</label><br></div>
-			 <select placeholder="'.$tipo.'" name="tipo" >
-				 <option></<option value="">'.$tipo.'</option>
-			 <option value="electrico">Electric</option>
-			 <option value="disel">Disel</option>
-			 <option value="gas">Gas</option>
-			 </select></div>
-
-			</div>
-			 <div class="col-md-4 center-block">
-			 <h2></h2>
-			 <div><label>Maintainance cost: </label><br></div>
-			 <div><input id="mant"  placeholder="'.$mant.'" name="mant"></div>
-			 <div><br><label>Maintainance frecuency: </label><br></div>
-			 <div><input id="frecMant"  placeholder="'.$frecMant.'" name="frecMant"></div>
-
-			</div>
-			 <div class="col-md-4 center-block">
-
-					<div><br><label>Transport Operator hourly salary:</label><br></div>
-					<div><input id="costohora" placeholder="'.$costohora.'" name="costohora" ></div>
-
+			 <div class="row">
+				 <div class = "col">
+					 <div><label>Number of transport elements:</label><br></div>
+						 <div><input id="mont"  placeholder="<?php $mont ?>"name="mont"></div>
+				 </div>
+				 <div class = "col">
+					 <div><label>Maintainance cost: </label><br></div>
+					 <div><input id="mant"  placeholder="<?php $mant ?>" name="mant"></div>
+				 </div>
+				 <div class ="col">
+					 <div><br><label>Maintainance frecuency: </label><br></div>
+					<div><input id="frecMant"  placeholder="<?php $frecMant ?>" name="frecMant"></div>
+				 </div>
+			 </div>
+			 <div class ="row">
+		 		<div class ="col">
+		 			<div><br><label>Energy cost of transport:</label><br></div>
+		 			<div><input id="costoMont" placeholder="<?php $costoMont ?>" name="costoMont"></div>
+		 		</div>
+		 		<div class = "col">
+		 			<div><br><label>Transport Operator hourly salary:</label><br></div>
+		 			<div><input id="costohora" placeholder="<?php $costohora ?>" name="costohora" ></div>
+		 		</div>
+		 	</div>
+			<div class ="row">
+				<div class = "col">
+					<div><br><label>Type of transport:</label><br></div>
+ 			 <select placeholder="<?php $tipo ?>" name="tipo" >
+ 				 <option></<option value=""><?php $tipo ?></option>
+ 			 <option value="electrico">Electric</option>
+ 			 <option value="disel">Disel</option>
+ 			 <option value="gas">Gas</option>
+ 			 </select>
 				</div>
-
-
-					<div><button  class="btn-default" value="generar" type="submit" name="generar">Edit Profile</button></div>
+			</div>
+			<!-- Submit button-->
+	<div><button  class="btn-default" value="generar" type="submit" name="generar">Edit Profile</button></div>
 					<div>
 			        <INPUT TYPE="FILE" SIZE="44" NAME="imagen"></TD></TR>
 							<INPUT TYPE="SUBMIT" NAME="enviar" VALUE="Subir mapa">
@@ -172,12 +189,10 @@ if(!isset($_SESSION['Name']))
 
 		</form>
 		</div>
-			';
-
-?>
 <!DOCTYPE html>
 <html>
 	<head>
+		  <!--Loads CSS styles, logo and window name -->
 		<meta charset ="UTF-8">
 		<link rel="stylesheet" href="css/styleEditProfile.css" type="text/css" media="all" />
 		<!--link rel="stylesheet" href="css/style.css" type="text/css" media="all" /-->
@@ -210,9 +225,4 @@ if(!isset($_SESSION['Name']))
 		    rel="stylesheet">
 		<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
  	</head>
-    <body>
-    <div>
-
-		</div>
- </body>
 </html>

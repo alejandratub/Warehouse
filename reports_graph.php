@@ -1,58 +1,61 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset ="UTF-8">
-		<link rel="stylesheet" href="css/stylereportes.css" type="text/css" media="all" />
-		<title>Reports</title>
-		<link rel="shortcut icon" type="image/png" href="images/w.png"/>
-		<!-- custom-theme -->
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="keywords" content="Deft Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-		<script type="application/x-javascript">
-			addEventListener("load", function () {
-				setTimeout(hideURLbar, 0);
-			}, false);
-
-			function hideURLbar() {
-				window.scrollTo(0, 1);
-			}
-		</script>
-		<!-- //custom-theme -->
-		<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-		<!-- Owl-carousel-CSS -->
-		<link href="css/owl.carousel.css" rel="stylesheet">
-		<link href="css/styleT.css" rel="stylesheet" type="text/css" media="all" />
-		<!-- font-awesome-icons -->
-		<link href="css/font-awesome.css" rel="stylesheet"/>
-		<!-- //font-awesome-icons -->
-		<link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
-				rel="stylesheet"/>
-		<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet"/>
-		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-	</head>
-    <body>
+	    <body>
     <div>
         <?php
+				//User session management
             session_start();
             if(!isset($_SESSION['Name']))
                 header("Location: login.php");
+				//navbar load
             require("navBar/navBar.php");
             navbar();
+				//function to get and post all the information
 						 require('functions/reportes.php');
 
-        ?>
+				//get 20 products based on time
+
+				$postProducts = array(
+
+						's' => 'times'
+					 );
+				$dataP =createReport($postProducts);
+
+				$Ptimes= json_encode($dataP);
+
+				//get 20 most moved products
+				$postProducts = array(
+
+					's' => 'movements'
+				 );
+				$dataP =createReport($postProducts);
+
+				$Pmovements= json_encode($dataP);
+				//get lift-truck's times
+				$postProducts = array(
+
+						's' => 'lt_times'
+					 );
+				$dataP =createReport($postProducts);
+
+				$lt_times= json_encode($dataP);
+
+				 //get lift-truck's movements
+
+				$postProducts = array(
+
+						's' => 'lt_movements'
+					 );
+				$dataP =createReport($postProducts);
+
+				$lt_movements= json_encode($dataP);
+		 ?>
 
 			<div class="container">
               <form action="reportes.php" method="post">
 
                <h1>Reports</h1>
-
-                <!--body data-spy="scroll" data-target=".navbar" data-offset="50"-->
-
-                <!-- The navbar - The <a> elements are used to jump to a section in the scrollable area -->
+						<!-- Second navbar, to navigate between graphs -->
                 <nav class="navbar navbar-default">
                     <div class="navbar-header navbar-left">
           					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -80,62 +83,11 @@
             <div class="clearfix"> </div>
 
 
-
-
-
-         <?php
-				 //get 20 products based on time
-
-				 $postProducts = array(
-
-						 's' => 'times'
-						);
-				 $dataP =createReport($postProducts);
-
-				 $Ptimes= json_encode($dataP);
-
-				 //get 20 most moved products
-				 $postProducts = array(
-
-				 	 's' => 'movements'
-				 	);
-				 $dataP =createReport($postProducts);
-
-				 $Pmovements= json_encode($dataP);
-				 //get lift-truck's times
-				 $postProducts = array(
-
-						 's' => 'lt_times'
-						);
-				 $dataP =createReport($postProducts);
-
-				 $lt_times= json_encode($dataP);
-
-				 	//get lift-truck's movements
-
-				 $postProducts = array(
-
-						 's' => 'lt_movements'
-						);
-				 $dataP =createReport($postProducts);
-
-				 $lt_movements= json_encode($dataP);
-
-
-			 // var_dump($Pmovements);
-				//var_dump($Ptimes);
-
-				//product's time chart
-			?>
-
-
-
-
-
 		<!-- Section 1 -->
 		<div id="section1">
 		<div class="center-block">
 				<h1>Products' time</h1>
+				<!-- function to call Products' time graph -->
 				<div id="Ptime" style="height: 500px; width: 100%;"></div><br><br><br><br>
 		 </div>
 	 </div>
@@ -145,6 +97,7 @@
 		<div id="section2">
 		<div class="center-block">
 						<h1>Products' movements</h1>
+						<!-- function to call Products' movements graph -->
 					<div id="Pmovement" style="height: 500px; width: 100%;"></div>
 		</div>
 	</div>
@@ -153,26 +106,25 @@
 	<div id="section3">
 	<div class="center-block">
 			<h1>Lift-trucks' time</h1>
+			<!-- function to call Lift-trucks' time graph -->
 			<div id="lt_time" style="height: 500px; width: 100%;"></div><br><br><br><br>
 	 </div>
  </div>
+
  <!-- Section 4 -->
  <div id="section4">
  <div class="center-block">
 		 <h1>Lift-trucks' movements</h1>
+		 <!-- function to call Lift-trucks' movements graph -->
 		 <div id="lt_movements" style="height: 500px; width: 100%;"></div><br><br><br><br>
 	</div>
  </div>
 
      </form>
-
-
-
 					</div>
 				</div>
-
-									<script>
-
+		<script>
+				//Draw Products' time graph
 									function func1(){
 										var chart1 = new CanvasJS.Chart("Ptime", {
 											animationEnabled: true,
@@ -182,7 +134,7 @@
 												text: "Top 20 products based on time"
 											},
 											data: [{
-												type: "bar", //change type to bar, line, area, pie, etc
+												type: "bar",
 												indexLabelFontColor: "#ffffff",
 												indexLabelPlacement: "outside",
 												dataPoints: <?php echo $Ptimes; ?>
@@ -191,7 +143,7 @@
 										chart1.render();
 									}
 
-
+	//Draw Products' mpvements graph
 									function func2(){
 										var chart2 = new CanvasJS.Chart("Pmovement", {
 											animationEnabled: true,
@@ -201,7 +153,7 @@
 												text: "Top 20 moved products"
 											},
 											data: [{
-												type: "bar", //change type to bar, line, area, pie, etc
+												type: "bar",
 												indexLabelFontColor: "#ffffff",
 												indexLabelPlacement: "outside",
 												dataPoints: <?php echo $Pmovements; ?>
@@ -209,7 +161,7 @@
 										});
 										chart2.render();
 									}
-
+	//Draw Lift-trucks' time graph
 									function func3(){
 										var chart3 = new CanvasJS.Chart("lt_time", {
 											animationEnabled: true,
@@ -219,7 +171,7 @@
 												text: "Lift-trucks' time"
 											},
 											data: [{
-												type: "bar", //change type to bar, line, area, pie, etc
+												type: "bar",
 												indexLabelFontColor: "#ffffff",
 												indexLabelPlacement: "outside",
 												dataPoints:  <?php echo $lt_times; ?>
@@ -228,6 +180,7 @@
 										chart3.render();
 									}
 
+						//Draw Lift-trucks' movements graph
 									function func4(){
 										var chart4 = new CanvasJS.Chart("lt_movements", {
 											animationEnabled: true,
@@ -237,7 +190,7 @@
 												text: "Lift-trucks' movements"
 											},
 											data: [{
-												type: "bar", //change type to bar, line, area, pie, etc
+												type: "bar",
 												indexLabelFontColor: "#ffffff",
 												indexLabelPlacement: "outside",
 												dataPoints:  <?php echo $lt_movements; ?>
@@ -254,4 +207,38 @@
 								</script>
 
      </body>
+		 <head>
+	 		 <!--Loads CSS styles, logo and window name -->
+	 		<meta charset ="UTF-8">
+	 		<link rel="stylesheet" href="css/stylereportes.css" type="text/css" media="all" />
+	 		<title>Reports</title>
+	 		<link rel="shortcut icon" type="image/png" href="images/w.png"/>
+	 		<!-- custom-theme -->
+	 		<meta name="viewport" content="width=device-width, initial-scale=1">
+	 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	 		<meta name="keywords" content="Deft Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+	 	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+	 		<script type="application/x-javascript">
+	 			addEventListener("load", function () {
+	 				setTimeout(hideURLbar, 0);
+	 			}, false);
+
+	 			function hideURLbar() {
+	 				window.scrollTo(0, 1);
+	 			}
+	 		</script>
+	 		<!-- //custom-theme -->
+	 		<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+	 		<!-- Owl-carousel-CSS -->
+	 		<link href="css/owl.carousel.css" rel="stylesheet">
+	 		<link href="css/styleT.css" rel="stylesheet" type="text/css" media="all" />
+	 		<!-- font-awesome-icons -->
+	 		<link href="css/font-awesome.css" rel="stylesheet"/>
+	 		<!-- //font-awesome-icons -->
+	 		<link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
+	 				rel="stylesheet"/>
+	 		<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet"/>
+	 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+	 	</head>
 </html>

@@ -1,4 +1,5 @@
 <?php
+//function star to be called in all other windows
   function navbar()
   {
     echo '<ul>';
@@ -30,7 +31,6 @@
                        <li><a href="reports.php" class="hvr-ripple-in">Reports</a></li>
                        <li><a href="solutions.php" class="hvr-ripple-in">Solutions</a></li>
                         <li><a href="profile.php" class="hvr-ripple-in">Profile</a></li>
-                        <li><a href="logs.php" class="hvr-ripple-in">Logs</a></li>
 
 
                 ';
