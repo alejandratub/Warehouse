@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!--Load CSS styles, logo and window's name -->
 	<title>Previous Solutions</title>
 	<meta charset ="UTF-8">
 		<link rel="stylesheet" href="css/stylePasadas.css" type="text/css" media="all" />
@@ -35,20 +36,22 @@
 		 	</head>
 <body>
 <?php
+//User session management
             session_start();
             if(!isset($_SESSION['Name']))
                 header("Location: login.php");
+				//load navbar
             require("navBar/navBar.php");
             require('functions/editar.php');
             navbar();
-            
+
             //Get rearrangement instructions with this solution ID//
             $postData = array(
                 's' => 'viewInstructions',
                 'solution_id' => $_POST['solution_id']
             );
-            
-            
+
+
             //Combo box for previous solutions//
             $data = editarperfil($postData);
 
@@ -62,7 +65,7 @@
                                 After completing an arrangement check the box in the Completed column that corresponds to the row of that instruction.
                             </div>
                         </div>
-                        
+
                         <?php
                         //Table for showing solution steps//
                         echo "<br><div> <table align='center' class='table-condensed'>
@@ -76,7 +79,7 @@
                         <th>Final Floor</th>
                         <th>Completed</th>
                         </tr>";
-                        
+
                         $solution_id = $_POST['solution_id'];
                         foreach ($data as $row)
                         {
@@ -89,13 +92,13 @@
                             echo "<td>" . $row['initial_floor'] . "</td>";
                             echo "<td>" . $row['final_zone'] . "</td>";
                             echo "<td>" . $row['final_floor'] . "</td>";
-                            
+
                             if($completed=='t')
                                 echo "<td><input type=\"checkbox\" onclick=\"toggleStep(".$row['step'].", $solution_id)\" value = $completed checked name=\"".$row['step']."\" ></div></td>";
                             else
                                 echo "<td><input type=\"checkbox\" onclick=\"toggleStep(".$row['step'].", $solution_id)\" value = $completed name=\"".$row['step']."\" ></div></td>";
                         }
-                
+
                         echo "</table> </div>";
                         ?>
                     </div>
@@ -103,14 +106,14 @@
             </div>
 </body>
 
-<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>				
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 
 <script>
 
   function toggleStep(step, solution_id)
   {
     var json = "[{\"s\":\"updateChecklist\", \"step\":" + step + ", \"solution_id\":" +solution_id +" }]";
-    
+
     $.ajax({
     type: "POST",
     beforeSend: function(request) {

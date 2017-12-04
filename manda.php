@@ -28,11 +28,4 @@ echo $response;
 if($response === FALSE){
     die('Error');
 }
-/*
-// Decode the response
-$responseData = json_decode($response, TRUE);
-
-// Print the date from the response
-echo $responseData['published'];
-*/
 ?>

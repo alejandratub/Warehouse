@@ -1,4 +1,5 @@
 <?php
+//function to get and post infpormation from the webservice
 function createReport($data)
 {
   $json = json_encode($data);

@@ -1,4 +1,5 @@
 <?php
+//navbar function only for the login page
   function navbar()
   {
     echo '<ul>';

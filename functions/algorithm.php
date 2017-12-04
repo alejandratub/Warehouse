@@ -1,4 +1,5 @@
 <?php
+//function to run the genetic algorithm
 function runAlgorithm($dataAnalytic)
 {
   $curl = curl_init();
@@ -28,8 +29,6 @@ function runAlgorithm($dataAnalytic)
   curl_setopt($curlAnalytic, CURLOPT_URL, $urlAnalytic );
   curl_setopt($curlAnalytic, CURLOPT_RETURNTRANSFER, 1 );
   curl_setopt($curlAnalytic, CURLOPT_POSTFIELDS,$dataAnalytic);
-  //curl_setopt($curlAnalytic, CURLOPT_TIMEOUT_MS, 1);
-     // Defined for no server response
   curl_setopt($curlAnalytic, CURLOPT_TIMEOUT, 1);
   curl_setopt($curlAnalytic, CURLOPT_RETURNTRANSFER, false);
   curl_setopt($curlAnalytic, CURLOPT_CONNECTTIMEOUT, 1);

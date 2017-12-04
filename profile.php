@@ -31,7 +31,7 @@
 			<div><h1>Profile</h1></div>
 		</div>
 		<div class=" col-md right-block">
-<!--Show all profile information -->
+<!--Shows all profile information -->
 		<div><label>Number of transport elements: <?php $mont ?></label><br></div>
 		<div><br><label>Energy cost of transport: <?php $costoMont ?></label><br></div>
 		<div><br><br><br><label>Type of transport: <?php $tipo ?></label><br></div>

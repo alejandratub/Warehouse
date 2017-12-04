@@ -1,4 +1,5 @@
 <?php
+//function to do the login
 function iniciarSesion($usuario,$contrasena)
 {
 $hashed_password = hash("sha256",$contrasena);

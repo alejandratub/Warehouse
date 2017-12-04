@@ -94,12 +94,10 @@ if(!isset($_SESSION['Name']))
 		{
 			$imagen = $_REQUEST['imagen'];
 
-			// Subir archivo
+			// upload image
          $copiarArchivo = false;
-
-      // Copiar archivo en el directorio de archivos subidos
-      // Se renombra para evitar que sobreescriba un archivo existente
-      // Para garantizar la unicidad del nombre se añade una marca de tiempo
+				 //Copy image in the directory of the files uploaded
+				 //Rename the file to avoid name conflicts
          if (is_uploaded_file ($_FILES['imagen']['tmp_name']))
          {
             $nombreDirectorio = "images";
@@ -107,17 +105,17 @@ if(!isset($_SESSION['Name']))
             $nombreArchivo = $idUnico . "-" . $_FILES['imagen']['name'];
             $copiarArchivo = true;
          }
-      // No se ha introducido ningún archivo
+      // No file has been selected
             else if ($_FILES['imagen']['name'] == "")
             $nombreArchivo = '';
-      // El archivo introducido no se ha podido subir
+			//file selected was unable to upload
          else
          {
             $errores = $errores . "<LI>Image could not be uploaded\n";
             $nombreArchivo = '';
          }
 
-     // Mostrar errores encontrados
+     // Show errors found
          if ($errores != "")
          {
             print ("No se ha podido realizar la inserci&oacute;n debido a los siguientes errores:");
@@ -128,7 +126,7 @@ if(!isset($_SESSION['Name']))
             exit();
          }
 
-     // Mover archivo de imagen a su ubicación definitiva
+     // Move image to final destination 
          if ($copiarArchivo)
             move_uploaded_file ($_FILES['imagen']['tmp_name'],
             $nombreDirectorio . $nombreArchivo);

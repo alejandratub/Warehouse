@@ -1,4 +1,5 @@
 <?php
+//function to get and post information from the webservice
 function editarperfil($data)
 {
   $json = json_encode($data);

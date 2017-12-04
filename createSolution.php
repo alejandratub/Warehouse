@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!--Load CSS styles, logo and window's name  -->
 	<title>Generar Solución</title>
 	<meta charset ="UTF-8">
 		<link rel="stylesheet" href="css/styleNew.css" type="text/css" media="all" />
@@ -35,12 +36,16 @@
  	</head>
 <body>
 <?php
-            session_start();
+	//user session management
+			      session_start();
             if(!isset($_SESSION['Name']))
                 header("Location: login.php");
+					//load navbar
             require("navBar/navBar.php");
+					//function to get and post all the information needed
 						require("functions/algorithm.php");
             navbar();
+					//user information
 						$id_cuenta=$_SESSION['id_cuenta'];
 						/*$emails = array(
 							'1' => $id_cuenta
@@ -52,7 +57,7 @@
 
 				if(isset($_POST['generar']))
 				{
-
+					//validate dates
 					 if (date('d-m-Y',strtotime($_POST['date1'])) > date('d-m-Y',strtotime($_POST['date2'])))
 					 {
 						 echo "<div class=\"infRojo\">Start date should be before the end date.</div>";
@@ -65,8 +70,7 @@
                             $reservePercent=100;
                         else if($reservePercent<0)
                             $reservePercent=0;
-                        
-                        //Falta obtener user_id de bd//
+						//information needed
 						 $data = array(
 						 'startDate' => $_POST['date1'],
 						 'endDate' => $_POST['date2'],
@@ -75,19 +79,16 @@
 						 'emails' => $emails
 						 );
 						 $dataAnalytic = json_encode($data);
-						 
+
 						echo "<div class=\"infVerde\">Your request has been made.</div>";
-							//echo "[".$dataAnalytic."]";
-					//	set_time_limit(0);
 						runAlgorithm($dataAnalytic);
 
 				}
 
-		//	header("Location: solutions.php");
 				}
 
-
          ?>
+				 <!--User input -->
             <div class="container">
                 <form action="createSolution.php" method="post">
                 <br><br>
@@ -96,7 +97,7 @@
                             <br><br> <h1>Create Solution</h1>
                         </div>
                     </div>
-                    
+
                     <div class='row'>
                         <div class="col-md-5 left-block">
                             <div><label>Data recovery:</label><br></div>
@@ -108,15 +109,16 @@
                             <div><label>Reservation Percentage:</label><br></div>
                             <div><input id="time" type="float" name="reservePercent" placeholder="%"required></div>
                         </div>
-						
+
 						<div class="col-md-2">
 						</div>
-						
+
 						<div class="col-md-5">
                             <br>
                             <div class="panel panel-info">
+															<!--Relevant information for the user to properly enter the inputs needed -->
                                 <div class="panel-body">
-                                                        The reservation percentage parameter allows you to decide how much of your 
+                                                        The reservation percentage parameter allows you to decide how much of your
                                                         available space would you like to reserve for incoming product.
                                                         <br><br>
                                                         A high value for this parameter (> 70%) means that you expect a considerable amount
@@ -130,6 +132,7 @@
                             </div>
                         </div>
                     </div>
+										<!--Submit button -->
 							<div class="col-sm-12 col-mid-8 col-lg-8 ">
 								<div><button class=" button hvr-ripple-in" value=" generar" type="generar" name="generar">Create Solution</button></div>
 							</div>

@@ -73,7 +73,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="agile_banner_text_info">
 						<h3 class="editContent"> <span class="editContent"></span> Warehouse <label class="editContent">Supply Chain</label> </h3>
 					</div>
-					<!-- Slideshow 3 -->
+					<!--Images -->
 					<ul class="rslides" id="slider">
 						<li><img src="images/banner2.jpg" data-selector="img" alt=""></li>
 						<li><img src="images/banner3.jpg" data-selector="img" alt=""></li>
@@ -88,41 +88,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 		<!-- //banner -->
-
-
-
-	<!-- footer -->
-	<!--<div class="footer">
-		<div class="f-bg-w3l">
-			<div class="container">
-				<div class="col-md-4 w3layouts_footer_grid">
-					<ul class="social_agileinfo">
-						<li><a href="#" class="w3_facebook"><i class="fa fa-facebook"></i></a></li>
-						<li><a href="#" class="w3_twitter"><i class="fa fa-twitter"></i></a></li>
-						<li><a href="#" class="w3_instagram"><i class="fa fa-instagram"></i></a></li>
-						<li><a href="#" class="w3_google"><i class="fa fa-google-plus"></i></a></li>
-					</ul>
-				</div>
-				<div class="col-md-8 w3layouts_footer_grid">
-				<form action="#" method="post">
-						<input type="email" name="Email" placeholder="Enter your email..." required="">
-						<button class="btn1"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
-						<div class="clearfix"> </div>
-					</form>
-					<ul class="w3l_footer_nav">
-						<li><a href="index.html" class="active">Home</a></li>
-						<li><a href="services.html">Services</a></li>
-						<li><a href="gallery.html">Gallery</a></li>
-						<li><a href="icons.html">Web Icons</a></li>
-						<li><a href="mail.html">Mail Us</a></li>
-					</ul>
-					<p>© 2017 Deft. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts</a></p>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
-		</div>
-	</div-->
-	<!-- //footer -->
 
 	<!-- js -->
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>

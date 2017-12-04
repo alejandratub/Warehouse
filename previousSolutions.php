@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-								<!--Option to select -->
+								<!-- Option to select the solution wished to view-->
                 <div class='row text-center'>
                     <div class='col-md-12 col-sm-12'>
                         <div><label>Select the previous solution you would like to see:</label><br></div>
@@ -86,6 +86,7 @@
                 <div class='row'>
                     <div class='col-md-6 col-sm-6'>
                         <div class='panel panel-primary'>
+                          <!--Optimization percentages -->
                         <?php
                             $timeF = number_format((float)$time_reduction, 2, '.', '');
                             $distF = number_format((float)$distance_reduction, 2, '.', '');
@@ -96,6 +97,7 @@
                         </div>
 
                         <div class='panel panel-primary'>
+                          <!--Solution's general information -->
                         <?php
                             echo "<h2 class='text-center'>General Information</h2><br>";
                             echo "<label>Warehouse: $wh_name </label><br>";
@@ -109,6 +111,7 @@
                     </div>
                     <div class='col-md-6 col-sm-6'>
                         <form action="arrangeInstructions.php" method="post">
+                          <!--Buttons to select the desired option  --> 
                             <?php
                                 echo "<input type=\"hidden\" name=\"solution_id\" value=$defaultSolutionID>"
                             ?>

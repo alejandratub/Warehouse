@@ -1,9 +1,12 @@
 <?php
+//user session management
     session_start();
     if(isset($_SESSION['Name']))
         header("Location: home.php");
+//user information
     if (isset($_POST['submit']))
     {
+      //function that sends the user's information
         require('functions/sesion.php');
         $usuario=$_POST["usuario"];
         $contrasena=$_POST["contrasena"];
@@ -13,6 +16,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+      <!-- Loads CSS styles, logo and window's name-->
       <title>Login</title>
         <meta charset ="UTF-8">
         <link rel="stylesheet" href="css/stylelogin.css" type="text/css" media="all" />
@@ -65,9 +69,11 @@
             <div>
                 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
                 <form action="" method="post" >
+                  <!--LOGIN BLOCK -->
                     <div class='centrar'>
                     <div class="login-block">
                     <img src="images/current-logo-3.png" alt="logo" width=300px height=150px text-align=center>
+                    <!--Form for user input -->
                          <br><br>
                         <div><input id ="usuario" name="usuario" type="text" placeholder="Username"></div>
                         <br>

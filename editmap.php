@@ -39,9 +39,9 @@ navbar();
         ));
 
         //PRODUCTS PER SECTION//
-        //TODO es necesario obtener la información de los productos por seccion del momento
-        //en el que se genero la solucion y NO de este momento//
-        
+        //It is necessary to obtain the products' information selected in the moment
+        //the solution was generated rather than at the moment
+
         $data2 = array('s' => 'prodXsection');
         $json2 = json_encode($data2);
         // Create the context for the request
@@ -59,8 +59,8 @@ navbar();
 
         $solution_id = $_POST['solution_id'];
 
-        //Zona actualmente seleccionada//
-        //Por default se selecciona la primera//
+        //Zone selected at the moment//
+        //First zone selected by default//
         if(is_numeric($_POST['zonaSeleccionada']))
             $zonaSeleccionada = $_POST['zonaSeleccionada'];
 
@@ -106,21 +106,21 @@ navbar();
 
         for($e=0;$e<count($responseData2);$e++)
         {
-            $beacon = $responseData2[$e]['beacon_id'];          //Zona de beacon actual//
-            $piso = $responseData2[$e]['floor'];                //Piso actual//
-            $nombre = $responseData2[$e]['name'];                //Producto actual//
-            $section_id = $responseData2[$e]['id'];              //Zona actual (separadas por piso)//
+            $beacon = $responseData2[$e]['beacon_id'];          //Zone of the actual beacon//
+            $piso = $responseData2[$e]['floor'];                //Actual Floor//
+            $nombre = $responseData2[$e]['name'];                //Actual Product//
+            $section_id = $responseData2[$e]['id'];              //Actual Zone divided by floors
 
-            //Verifica si ya se agrego el piso para esta zona//
+            //Verifies if the floor has been added to the zone
             if(!isset($pisoAgregado[$beacon][$piso]))
             {
-                //Termina la tabla de la ultima zona de beacons//
+                //Ends the table for the last beacon zone
                 $infoZonas[$prevBeacon] = $infoZonas[$prevBeacon] . "</table>";
 
                 $pisoAgregado[$beacon][$piso]=1;
                 $infoZonas[$beacon]= $infoZonas[$beacon] . "<br><h3>" .  "Floor " . $piso . "</h3><br><br>";
 
-                //Crea Tabla y headings para elementos de este piso//
+                //Creates table and headings for the elements in the floor
                 $infoZonas[$beacon]= $infoZonas[$beacon] .  "<table class=\"table-condensed\">
                                                             <tr>
                                                             <th>Product</th>
@@ -130,23 +130,23 @@ navbar();
                                                             </tr>";
             }
 
-            //Mapeo de zonas de beacons con indices//
+            //Beacon zone mapping with idex
             if(!isset($beaconsAgregados[$beacon]))
             {
                 $beaconsAgregados[$beacon] = 1;
                 $mapeoBeacons[$storageZoneCounter] = $beacon;
 
-                //Selecciona la primera zona disponible por default si no se ha seleccionado todavia//
+                //Selects the first available zone by default
                 if(!isset($zonaSeleccionada) && $storageZoneCounter==0)
                     $zonaSeleccionada=$beacon;
 
                 $storageZoneCounter++;
             }
 
-            //Verifica si el producto agregado debe moverse a otra zona//
+            //Verifies if the product added should be moved to another zone
             $seccionInicialInst = $instructionsData[$instCounter]['initial_section'];
 
-            
+
             if($seccionInicialInst==$section_id)
             {
                 $destination = $instructionsData[$instCounter]['final_beacon'];
@@ -168,7 +168,7 @@ navbar();
                     name=$step></td>";
                 }
 
-                //Establece una zona de destino por default//
+                //Stablishes a destination zone by default
                 if(isset($_POST['destination']))
                     $viewedDestination= $_POST['destination'];
                 else if($defaultDestinationSelected==0)
@@ -177,7 +177,7 @@ navbar();
                     $viewedDestination = $destination;
                 }
 
-                //Check the box corresponding to the destination zone currently viewed//
+                //Check the box corresponding to the destination zone currently viewed
                 if($viewedDestination==$destination)
                 {
                     $infoZonas[$beacon] = $infoZonas[$beacon] . "<td><input type=\"checkbox\" onclick=\"seleccionarLinea($zonaSeleccionada,$solution_id,$destination)\" checked></td>";
@@ -198,7 +198,7 @@ navbar();
                 $infoZonas[$beacon] = $infoZonas[$beacon] . "<td>" . "-" . "</td></tr>";
             }
 
-            //Obtiene el id del beacon anterior//
+            //Gets the id from the previous beacon
             $prevBeacon = $beacon;
         }
 
@@ -216,7 +216,7 @@ navbar();
                 $yf = $responseData[$i]['final_y'];
 
 
-                // comparación para obtener initial_x e initial_y
+                // Compare to get initial_x and initial_y
 
                 if($xi>$xMax)
                     $xMax = $xi;
@@ -230,7 +230,7 @@ navbar();
                 if($yi<$yMin)
                     $yMin = $yi;
 
-                // comparación para obtener final_x y final_y
+                // Compare to get final_x and final_y
                 if($xf<$xMin)
                     $xMin = $xf;
 
@@ -253,6 +253,7 @@ navbar();
 
             ?>
 
+            <!--Instructions for the user -->
             <div class='container'>
                 <div class='row'>
                     <div class='col-md-12 col-sm-12'>
@@ -276,7 +277,7 @@ navbar();
                         echo "<svg height='$height' width='$width' id='graph' style= \"position:absolute; top:0; left:0\">";
 
 
-                        $storageZoneCounter = 0;        //Zonas de almacenamiento tienen indices positivos
+                        $storageZoneCounter = 0;        //Storing zones have positive index
 
 
 
@@ -289,20 +290,20 @@ navbar();
                             $type = $responseData[$j]['type'];
                             $beacon_id = $responseData[$j]['id'];
 
-                            //escalamiento
+                            //Scale
                             $_x1 = (($x1-$xMin)*($scalePercent*$width))/($xMax-$xMin)+((1-$scalePercent)/2)*$width;
                             $_y1 = (($yMax-$y1)*($scalePercent*$height))/($yMax-$yMin)+((1-$scalePercent)/2)*$height;
 
                             $_x2 = (($x2-$xMin)*($scalePercent*$width))/($xMax-$xMin)+((1-$scalePercent)/2)*$width;
                             $_y2 = (($yMax-$y2)*($scalePercent*$height))/($yMax-$yMin)+((1-$scalePercent)/2)*$height;
 
-                            //Zonas de almacenamiento (Rojas) con producto//
+                            //Storing Zones with product (RED)
                             if($type >= 2)
                             {
-                                //Con producto//
+                                //With product//
                                 if($beacon_id == $mapeoBeacons[$storageZoneCounter])
                                 {
-                                    //Zona inicial (Verde)
+                                    //Initial Zone (Green)
                                     if($beacon_id == $zonaSeleccionada)
                                     {
                                         echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
@@ -310,7 +311,7 @@ navbar();
                                         <line id=\"linea".$mapeoBeacons[$storageZoneCounter]."\" x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(0,255,0);stroke-width:4\"/>";
                                     }
 
-                                    //Zona final (Morado)
+                                    //Final (PURPLE)
                                     else if($beacon_id==$viewedDestination)
                                     {
                                         echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
@@ -319,7 +320,7 @@ navbar();
                                     }
 
 
-                                    //Otras (Rojo)
+                                    //Others (RED)
                                     else
                                     {
                                         echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"red\" />
@@ -330,7 +331,7 @@ navbar();
 
                                 }
 
-                                //Sin producto//
+                                //Without Product//
                                 else
                                 {
                                     //Zona final (Morado)
@@ -341,7 +342,7 @@ navbar();
                                         <line id=\"linea".$mapeoBeacons[$storageZoneCounter]."\" x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(192,0,192);stroke-width:4\"/>";
                                     }
 
-                                    //Otras (Naranja)
+                                    //Others (ORANGE)
                                     else
                                     {
                                         echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"orange\" />
@@ -351,7 +352,7 @@ navbar();
                                 }
                             }
 
-                            //Pasillos (Grises)//
+                            //Corridor (GRAY)
                             else if($type == 0)
                             {
                                 echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"gray\" />
@@ -359,7 +360,7 @@ navbar();
                                 <line x1=\"" . $_x1 . "\" y1=\"" . $_y1 . "\" x2=\"" . $_x2 . "\" y2=\"" . $_y2 . "\" style=\"stroke:rgb(100,100,100);stroke-width:4\" />";
                             }
 
-                            //Zonas frecuentadas (Azules)//
+                            //Frecuented Zones (BLUE)
                             else
                             {
                                 echo " <circle cx=\"" . $_x1 . "\" cy=\"" . $_y1 . "\" r=\"6\" stroke=\"none\" stroke-width=\"none\" fill=\"blue\" />
@@ -371,6 +372,7 @@ navbar();
                     ?>
                             </svg>
                         </picture>
+                        <!--Legend for the user to understand the map shown -->
                             <div class='panel panel-primary text-center'>
                                 <div class='row'>
                                     <div class = 'col-md-12 col-sm-12'>
@@ -407,7 +409,7 @@ navbar();
                     <div class='col-md-6 col-sm-6'>
                         <div class='panel panel-primary'>
                             <?php
-                                 //Nombre de la zona seleccionada//
+                                 //Name of selected zone
                                   echo "<h2 class='text-center'>Zone $zonaSeleccionada</h2>";
                                   echo "<div class=\"panel-body\">$infoZonas[$zonaSeleccionada]</div>";
                             ?>
@@ -416,7 +418,7 @@ navbar();
                 </div>
             </div>
         <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-
+        <!--Reload page when a section is selected -->
         <script>
             function seleccionarLinea(zonaSeleccionada, solution_id, dest_id)
             {
