@@ -126,7 +126,7 @@ if(!isset($_SESSION['Name']))
             exit();
          }
 
-     // Move image to final destination 
+     // Move image to final destination
          if ($copiarArchivo)
             move_uploaded_file ($_FILES['imagen']['tmp_name'],
             $nombreDirectorio . $nombreArchivo);
@@ -136,6 +136,14 @@ if(!isset($_SESSION['Name']))
 		}
 ?>
 
+<div class='container'>
+		<div class='row'>
+				<div class='col-md-12 col-sm-2' allign = "middle">
+
+				</div>
+
+				</div>
+		</div>
 
 <!-- HTML part to be visualized by the user -->
 			<div class ="container">
@@ -143,31 +151,32 @@ if(!isset($_SESSION['Name']))
 			<br><br>
 			 <h1>Edit Profile</h1><br><br>
 			 <div class="row">
-				 <div class = "col">
+				 <div class = 'col-md-12 col-sm-2'align="middle">
 					 <div><label>Number of transport elements:</label><br></div>
 						 <div><input id="mont"  placeholder="<?php $mont ?>"name="mont"></div>
+
 				 </div>
-				 <div class = "col">
+				  <div class = 'col-md-12 col-sm-2'align="middle">
 					 <div><label>Maintainance cost: </label><br></div>
 					 <div><input id="mant"  placeholder="<?php $mant ?>" name="mant"></div>
 				 </div>
-				 <div class ="col">
+				  <div class = 'col-md-12 col-sm-2'align="middle">
 					 <div><br><label>Maintainance frecuency: </label><br></div>
 					<div><input id="frecMant"  placeholder="<?php $frecMant ?>" name="frecMant"></div>
 				 </div>
 			 </div>
 			 <div class ="row">
-		 		<div class ="col">
+		 		 <div class = 'col-md-12 col-sm-2'align="middle">
 		 			<div><br><label>Energy cost of transport:</label><br></div>
 		 			<div><input id="costoMont" placeholder="<?php $costoMont ?>" name="costoMont"></div>
 		 		</div>
-		 		<div class = "col">
+		 		 <div class = 'col-md-12 col-sm-2'align="middle">
 		 			<div><br><label>Transport Operator hourly salary:</label><br></div>
 		 			<div><input id="costohora" placeholder="<?php $costohora ?>" name="costohora" ></div>
 		 		</div>
 		 	</div>
 			<div class ="row">
-				<div class = "col">
+				 <div class = 'col-md-12 col-sm-2'align="middle">
 					<div><br><label>Type of transport:</label><br></div>
  			 <select placeholder="<?php $tipo ?>" name="tipo" >
  				 <option></<option value=""><?php $tipo ?></option>
@@ -178,11 +187,11 @@ if(!isset($_SESSION['Name']))
 				</div>
 			</div>
 			<!-- Submit button-->
-	<div><button  class="btn-default" value="generar" type="submit" name="generar">Edit Profile</button></div>
-					<div>
-			        <INPUT TYPE="FILE" SIZE="44" NAME="imagen"></TD></TR>
-							<INPUT TYPE="SUBMIT" NAME="enviar" VALUE="Subir mapa">
-							</div>
+			<div class = 'col-md-12 col-sm-2'align="middle">
+			<INPUT TYPE="FILE" SIZE="44" NAME="imagen"></TD></TR>
+
+			</div>
+	<div><button  class="button hvr-ripple-in" align="middle" value="generar" type="submit" name="generar">Edit Profile</button></div>
 
 
 		</form>

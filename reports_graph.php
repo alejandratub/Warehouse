@@ -47,10 +47,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						 require('functions/reportes.php');
 
 				//get 20 products based on time
-
 				$postProducts = array(
+						's' => 'times',
+            'startDate' => $_POST['date1'],
+            'endDate' => $_POST['date2']
 
-						's' => 'times'
 					 );
 				$dataP =createReport($postProducts);
 
@@ -59,7 +60,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				//get 20 most moved products
 				$postProducts = array(
 
-					's' => 'movements'
+					's' => 'movements',
+          'startDate' => $_POST['date1'],
+          'endDate' => $_POST['date2']
 				 );
 				$dataP =createReport($postProducts);
 
@@ -67,21 +70,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				//get lift-truck's times
 				$postProducts = array(
 
-						's' => 'lt_times'
+						's' => 'lt_times',
+            'startDate' => $_POST['date1'],
+            'endDate' => $_POST['date2']
 					 );
 				$dataP =createReport($postProducts);
 
-				$lt_times= json_encode($dataP);
+				$lt_times = json_encode($dataP);
 
 				 //get lift-truck's movements
 
 				$postProducts = array(
 
-						's' => 'lt_movements'
+						's' => 'lt_movements',
+            'startDate' => $_POST['date1'],
+            'endDate' => $_POST['date2']
 					 );
 				$dataP =createReport($postProducts);
 
-				$lt_movements= json_encode($dataP);
+				$lt_movements = json_encode($dataP);
+        var_dump($lt_times);
+        var_dump($times);
 		 ?>
 
 			<div class="container">
@@ -104,8 +113,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                      <li><a href="#section1" class="hvr-ripple-in" styl="center-block">Products' time</a></li>
 										 <li><a href="#section2" class="hvr-ripple-in" styl="center-block">Products' movements</a></li>
-										 <li><a href="#section3" class="hvr-ripple-in" styl="center-block">Lift-trucks' time</a></li>
-										 <li><a href="#section4" class="hvr-ripple-in" styl="center-block">Lift-trucks' movements</a></li>
+										 <!--li><a href="#section3" class="hvr-ripple-in" styl="center-block">Lift-trucks' time</a></li>
+										 <li><a href="#section4" class="hvr-ripple-in" styl="center-block">Lift-trucks' movements</a></li-->
 
 
                     </ul>
@@ -151,7 +160,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		 <!-- function to call Lift-trucks' movements graph -->
 		 <div id="lt_movements" style="height: 500px; width: 100%;"></div><br><br><br><br>
 	</div>
- </div>
+</div>
 
      </form>
 					</div>
@@ -240,6 +249,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
      </body>
 
-		<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+     		<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 </html>
