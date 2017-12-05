@@ -24,23 +24,23 @@
 		$mant=$data['maintaince'];
 		$frecMant=$data['main_freq'];
 
-?>
 
+echo '
 		<div class="container">
 		<div class="first-block">
 			<div><h1>Profile</h1></div>
 		</div>
 		<div class=" col-md right-block">
 <!--Shows all profile information -->
-		<div><label>Number of transport elements: <?php $mont ?></label><br></div>
-		<div><br><label>Energy cost of transport: <?php $costoMont ?></label><br></div>
-		<div><br><br><br><label>Type of transport: <?php $tipo ?></label><br></div>
-		<div><br><label>Transport Operator hourly salary: <?php $costohora ?></label><br><br><br></div>
-		<div><br><label>Maintainance cost: <?php $mant ?></label><br></div>
-		<div><br><label>Maintainance frecuency: <?php $frecMant ?></label><br></div>
+		<div><label>Number of transport elements: '.$mont.'</label><br></div>
+		<div><br><label>Energy cost of transport: $ '.$costoMont.'</label><br></div>
+		<div><br><br><br><label>Type of transport: '.$tipo.'</label><br></div>
+		<div><br><label>Transport Operator hourly salary: $ '.$costohora.'</label><br><br><br></div>
+		<div><br><label>Maintainance cost: $'.$mant.'</label><br></div>
+		<div><br><label>Maintainance frecuency: '.$frecMant.' times per year</label><br></div>
 		</div>
-		</div>
-
+		</div>';
+?>
 <!DOCTYPE html>
 <html>
 	<head>

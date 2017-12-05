@@ -89,8 +89,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				$dataP =createReport($postProducts);
 
 				$lt_movements = json_encode($dataP);
-        var_dump($lt_times);
-        var_dump($times);
 		 ?>
 
 			<div class="container">
@@ -145,22 +143,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 
 	<!-- Section 3 -->
-	<div id="section3">
+	<!--div id="section3">
 	<div class="center-block">
 			<h1>Lift-trucks' time</h1>
 			<!-- function to call Lift-trucks' time graph -->
-			<div id="lt_time" style="height: 500px; width: 100%;"></div><br><br><br><br>
+			<!--div id="lt_time" style="height: 500px; width: 100%;"></div><br><br><br><br>
 	 </div>
- </div>
+ </div-->
 
  <!-- Section 4 -->
- <div id="section4">
+ <!--div id="section4">
  <div class="center-block">
 		 <h1>Lift-trucks' movements</h1>
 		 <!-- function to call Lift-trucks' movements graph -->
-		 <div id="lt_movements" style="height: 500px; width: 100%;"></div><br><br><br><br>
+		 <!--div id="lt_movements" style="height: 500px; width: 100%;"></div><br><br><br><br>
 	</div>
-</div>
+</div-->
 
      </form>
 					</div>

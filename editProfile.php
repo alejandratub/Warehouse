@@ -134,52 +134,44 @@ if(!isset($_SESSION['Name']))
 			print ("<A TARGET='_blank' HREF='" . $nombreDirectorio . $nombreArchivo . "'>" . $nombreArchivo . "</A>");
 			print ("<IMG SRC=\"$nombreDirectorio$nombreArchivo\">");
 		}
-?>
 
-<div class='container'>
-		<div class='row'>
-				<div class='col-md-12 col-sm-2' allign = "middle">
 
-				</div>
-
-				</div>
-		</div>
-
+echo '
 <!-- HTML part to be visualized by the user -->
 			<div class ="container">
 			<form action="editProfile.php" method="post">
 			<br><br>
 			 <h1>Edit Profile</h1><br><br>
 			 <div class="row">
-				 <div class = 'col-md-12 col-sm-2'align="middle">
+				 <div class = "col-md-12 col-sm-2"align="middle">
 					 <div><label>Number of transport elements:</label><br></div>
-						 <div><input id="mont"  placeholder="<?php $mont ?>"name="mont"></div>
+						 <div><input id="mont"  placeholder="  '.$mont.'"name="mont"></div>
 
 				 </div>
-				  <div class = 'col-md-12 col-sm-2'align="middle">
+				  <div class = "col-md-12 col-sm-2" align="middle">
 					 <div><label>Maintainance cost: </label><br></div>
-					 <div><input id="mant"  placeholder="<?php $mant ?>" name="mant"></div>
+					 <div><input id="mant"  placeholder="  $ '. $mant.'" name="mant"></div>
 				 </div>
-				  <div class = 'col-md-12 col-sm-2'align="middle">
+				  <div class = "col-md-12 col-sm-2" align="middle">
 					 <div><br><label>Maintainance frecuency: </label><br></div>
-					<div><input id="frecMant"  placeholder="<?php $frecMant ?>" name="frecMant"></div>
+					<div><input id="frecMant"  placeholder="  '.$frecMant.' times per year" name="frecMant"></div>
 				 </div>
 			 </div>
 			 <div class ="row">
-		 		 <div class = 'col-md-12 col-sm-2'align="middle">
+		 		 <div class = "col-md-12 col-sm-2 " align="middle">
 		 			<div><br><label>Energy cost of transport:</label><br></div>
-		 			<div><input id="costoMont" placeholder="<?php $costoMont ?>" name="costoMont"></div>
+		 			<div><input id="costoMont" placeholder="  $ '.$costoMont.'" name="costoMont"></div>
 		 		</div>
-		 		 <div class = 'col-md-12 col-sm-2'align="middle">
+		 		 <div class = "col-md-12 col-sm-2"align="middle">
 		 			<div><br><label>Transport Operator hourly salary:</label><br></div>
-		 			<div><input id="costohora" placeholder="<?php $costohora ?>" name="costohora" ></div>
+		 			<div><input id="costohora" placeholder="  $ '.$costohora.'" name="costohora" ></div>
 		 		</div>
 		 	</div>
 			<div class ="row">
-				 <div class = 'col-md-12 col-sm-2'align="middle">
+				 <div class = "col-md-12 col-sm-2" align="middle">
 					<div><br><label>Type of transport:</label><br></div>
- 			 <select placeholder="<?php $tipo ?>" name="tipo" >
- 				 <option></<option value=""><?php $tipo ?></option>
+ 			 <select placeholder='.$tipo.' name="tipo" >
+ 				 <option></<option value="">'.$tipo.'</option>
  			 <option value="electrico">Electric</option>
  			 <option value="disel">Disel</option>
  			 <option value="gas">Gas</option>
@@ -187,7 +179,7 @@ if(!isset($_SESSION['Name']))
 				</div>
 			</div>
 			<!-- Submit button-->
-			<div class = 'col-md-12 col-sm-2'align="middle">
+			<div class = "col-md-12 col-sm-2"align="middle">
 			<INPUT TYPE="FILE" SIZE="44" NAME="imagen"></TD></TR>
 
 			</div>
@@ -195,7 +187,8 @@ if(!isset($_SESSION['Name']))
 
 
 		</form>
-		</div>
+	</div>';
+		?>
 <!DOCTYPE html>
 <html>
 	<head>

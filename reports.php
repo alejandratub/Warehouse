@@ -24,7 +24,7 @@
 			'date2' => $_POST['date2'],
 			's' => 'lt_movements'
 			);
-			
+
 		$dataP = createReport($postData);
 		}
 	}
@@ -71,6 +71,18 @@
 
                <h1>Create Report</h1>
 
+
+							 <div class="col-md-12">
+
+															 <br>
+															 <div class="panel panel-info">
+																 <!--Relevant information for the user to properly enter the inputs needed -->
+																 <div class="panel-body" align="midle">
+
+																		 <p>Select the dates, based on wich you would like to create your reports on.</p>
+																			 </div>
+															 </div>
+													 </div>
 						 <!-- Part to select the dates based on which the reports should be made -->
 							 		<div class="right-block">
 	               			<div><label>Start date:</label><br></div>
