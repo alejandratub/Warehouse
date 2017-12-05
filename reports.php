@@ -8,11 +8,6 @@
 		navbar();
 //function that gets and posts all the informaton for the reports
 	require('functions/reportes.php');
-	//post to get all products
-		$postProducts = array(
-				's' => 'listaProducto'
-			 );
-		$dataP =createReport($postProducts);
 //dates validation
  if(isset($_POST['generar']))
 	{
@@ -25,10 +20,12 @@
 		{
 			//post the dates selected
 			$postData = array(
-				's' => 'lt_movements',
 			'date1' => $_POST['date1'],
-			'date2' => $_POST['date2']
+			'date2' => $_POST['date2'],
+			's' => 'lt_movements'
 			);
+			
+		$dataP = createReport($postData);
 		}
 	}
 
@@ -77,9 +74,9 @@
 						 <!-- Part to select the dates based on which the reports should be made -->
 							 		<div class="right-block">
 	               			<div><label>Start date:</label><br></div>
-	                    <div><input id="date"  name="date1" placeholder="dd-mm-yyyy" required></div>
+	                    <div><input id="date1"  name="date1" placeholder="dd-mm-yyyy" required></div>
 											<div><label>End date:</label><br></div>
-	                    <div><input id="date" name="date2" placeholder="dd-mm-yyyy" required></div>
+	                    <div><input id="date2" name="date2" placeholder="dd-mm-yyyy" required></div>
 	  										</div>
 </div>
                 <div><button class="button hvr-ripple-in" href = "reports_graph.php" value="generar" type="generar" name="generar">Create Report</button></div>

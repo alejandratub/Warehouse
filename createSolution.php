@@ -81,6 +81,7 @@
 						 $dataAnalytic = json_encode($data);
 
 						echo "<div class=\"infVerde\">Your request has been made.</div>";
+						//executes the algorithm 
 						runAlgorithm($dataAnalytic);
 
 				}

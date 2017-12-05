@@ -14,7 +14,7 @@
   <!--Loads CSS styles, logo and window name -->
 		<meta charset ="UTF-8">
 		<link rel="stylesheet" href="css/styleEditar.css" type="text/css" media="all" />
-		<title>Inicio</title>
+		<title>Home</title>
 		 <link rel="shortcut icon" type="image/png" href="images/w.png"/><!-- custom-theme -->
  		<link rel="shortcut icon" type="image/png" href="images/w.png"/>
  		<!-- custom-theme -->
@@ -48,24 +48,23 @@
 <body>
         <div class='container'>
             <div class='row'>
-                <div class='col-md-5 col-sm-5'>  
+                <div class='col-md-5 col-sm-5'>
                 </div>
-                <div class='col-md-2 col-sm-2'> 
+                <div class='col-md-2 col-sm-2'>
                     <img src="images/w.png"  align="middle" alt="logo" width=150px height=150px text-align=center>
                 </div>
-                <div class='col-md-5 col-sm-5'>  
+                <div class='col-md-5 col-sm-5'>
                 </div>
-                    
+
                 </div>
             </div>
-          </div>
-          
+
           <!-- Warehouse Logo-->
           <div class='centrar'>
-          
+
           <!-- Brief description of all sections inside the webapp-->
           <div class="col-md-12">
-                    
+
                           <br>
                           <div class="panel panel-info">
                             <!--Relevant information for the user to properly enter the inputs needed -->
