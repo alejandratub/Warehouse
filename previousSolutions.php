@@ -36,7 +36,7 @@
 
 
                 //If a solution Id is sent to the function actualizar() the combobox is selected
-                if($_POST['solutionValue']==$solution_id)
+                if(isset($_POST['solutionValue']) && $_POST['solutionValue']==$solution_id)
                 {
                     $defaultSolutionID = $_POST['solutionValue'];
                     $comboSolutions .=" <option value='".$solution_id."' selected=\"selected\">".$text."</option>";
