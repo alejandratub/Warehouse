@@ -12,8 +12,22 @@
 
 <body>
 	<!-- Two buttons for the two different views of solutions -->
-         <br><br> <h1>Solutions</h1><br><br>
+         <br><br> <h1>Solutions</h1><br><br><br>
+
+
+
          <div class='container'>
+					 <div class="col-md-12" align="middle" text-align=center>
+
+													<br>
+													<div class="panel panel-info">
+														<!--Relevant information for the user to properly enter the inputs needed -->
+														<div class="panel-body" align="middle" >
+
+																<p>Select an option.</p>
+																	</div>
+													</div>
+											</div>
              <div class='row center-block center-button text-center'>
                 <a class="btn-default hvr-ripple-in"  value="pasadas" name="pasadas" href ="previousSolutions.php">Previous Solutions</a>
             </div>

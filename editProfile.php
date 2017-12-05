@@ -181,7 +181,6 @@ echo '
 			<!-- Submit button-->
 			<div class = "col-md-12 col-sm-2"align="middle">
 			<INPUT TYPE="FILE" SIZE="44" NAME="imagen"></TD></TR>
-
 			</div>
 	<div><button  class="button hvr-ripple-in" align="middle" value="generar" type="submit" name="generar">Edit Profile</button></div>
 

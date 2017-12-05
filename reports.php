@@ -72,12 +72,12 @@
                <h1>Create Report</h1>
 
 
-							 <div class="col-md-12">
+							 <div class="col-md-12" align="middle">
 
 															 <br>
 															 <div class="panel panel-info">
 																 <!--Relevant information for the user to properly enter the inputs needed -->
-																 <div class="panel-body" align="midle">
+																 <div class="panel-body" align="middle" >
 
 																		 <p>Select the dates, based on wich you would like to create your reports on.</p>
 																			 </div>

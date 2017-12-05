@@ -81,7 +81,7 @@
 						 $dataAnalytic = json_encode($data);
 
 						echo "<div class=\"infVerde\">Your request has been made.</div>";
-						//executes the algorithm 
+						//executes the algorithm
 						runAlgorithm($dataAnalytic);
 
 				}
@@ -119,6 +119,7 @@
                             <div class="panel panel-info">
 															<!--Relevant information for the user to properly enter the inputs needed -->
                                 <div class="panel-body">
+																												Enter the dates based on which the solution should be made <br><br>
                                                         The reservation percentage parameter allows you to decide how much of your
                                                         available space would you like to reserve for incoming product.
                                                         <br><br>
